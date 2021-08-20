@@ -19,7 +19,7 @@
                 <li class="list-group-item">
                         <div class="row">
                             <div class="col-8">
-                                <p><c:out value="${event.serviceId}"/></p>
+                                <p><c:out value="${event.procedureId}"/></p>
                                 <p><c:out value="${event.startTime}"/></p>
                             </div>
                         </div>

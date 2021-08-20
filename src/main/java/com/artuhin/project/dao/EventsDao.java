@@ -24,9 +24,9 @@ public class EventsDao implements CrudDao<Event> {
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connectionProxy
                      .prepareStatement(CREATE_SQL, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setInt(1, event.getServiceId());
-            preparedStatement.setInt(2, event.getMasterId());
-            preparedStatement.setInt(3, event.getClientId());
+            preparedStatement.setLong(1, event.getProcedureId());
+            preparedStatement.setLong(2, event.getMasterId());
+            preparedStatement.setLong(3, event.getClientId());
             preparedStatement.setTimestamp(4, event.getStartTime());
             preparedStatement.executeUpdate();
             ResultSet id = preparedStatement.getGeneratedKeys();
@@ -43,11 +43,11 @@ public class EventsDao implements CrudDao<Event> {
         String UPDATE_SQL = "UPDATE events SET service_id = ?, master_id = ?, client_id = ?, start_time = ? WHERE id = ?";
         try (ConnectionProxy connection = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
-            preparedStatement.setInt(1, event.getServiceId());
-            preparedStatement.setInt(2, event.getMasterId());
-            preparedStatement.setInt(3, event.getClientId());
+            preparedStatement.setLong(1, event.getProcedureId());
+            preparedStatement.setLong(2, event.getMasterId());
+            preparedStatement.setLong(3, event.getClientId());
             preparedStatement.setTimestamp(4, event.getStartTime());
-            preparedStatement.setInt(5, event.getId());
+            preparedStatement.setLong(5, event.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
@@ -117,6 +117,7 @@ public class EventsDao implements CrudDao<Event> {
              PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_EVENTS_BY_CLIENT_ID_SQL)) {
             preparedStatement.setLong(1, id);
             events = ResultSetParser.getInstance().parse(preparedStatement.executeQuery(), new Event());
+            System.out.println();
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
         }

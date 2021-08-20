@@ -209,7 +209,7 @@ public class UserDao implements CrudDao<User> {
 
     private boolean checkIsMasterFree(List<Event> events, Timestamp timestamp) {
         for (Event event : events) {
-            if (timestamp.getTime() >= event.getStartTime().getTime() && timestamp.getTime() <= (event.getStartTime().getTime() + event.getServiceId())) {
+            if (timestamp.getTime() >= event.getStartTime().getTime() && timestamp.getTime() <= (event.getStartTime().getTime() + event.getProcedureId())) {
                 return false;
             }
         }

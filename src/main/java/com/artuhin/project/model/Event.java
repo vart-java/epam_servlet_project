@@ -10,19 +10,19 @@ import java.util.Objects;
 public class Event {
 
     @Column(name = "id")
-    private int id;
+    private long id;
 
-    @Column(name = "service_id")
-    private int serviceId;
+    @Column(name = "procedure_id")
+    private long procedureId;
 
     @Column(name = "master_id")
-    private int masterId;
+    private long masterId;
 
     @Column(name = "start_time")
     private Timestamp startTime;
 
     @Column(name = "client_id")
-    private int clientId;
+    private long clientId;
 
     public Timestamp getStartTime() {
         return startTime;
@@ -32,41 +32,41 @@ public class Event {
         this.startTime = startTime;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getServiceId() {
-        return serviceId;
+    public long getProcedureId() {
+        return procedureId;
     }
 
-    public void setServiceId(int serviceId) {
-        this.serviceId = serviceId;
+    public void setProcedureId(long procedureId) {
+        this.procedureId = procedureId;
     }
 
-    public int getMasterId() {
+    public long getMasterId() {
         return masterId;
     }
 
-    public void setMasterId(int masterId) {
+    public void setMasterId(long masterId) {
         this.masterId = masterId;
     }
 
-    public int getClientId() {
+    public long getClientId() {
         return clientId;
     }
 
-    public void setClientId(int clientId) {
+    public void setClientId(long clientId) {
         this.clientId = clientId;
     }
 
-    public Event(int id, int master_id, int serviceId, int clientId, Timestamp startTime) {
+    public Event(long id, int master_id, int procedureId, int clientId, Timestamp startTime) {
         this.id = id;
-        this.serviceId = serviceId;
+        this.procedureId = procedureId;
         this.masterId = master_id;
         this.clientId = clientId;
         this.startTime = startTime;
@@ -81,7 +81,7 @@ public class Event {
         if (!(o instanceof Event)) return false;
         Event o1 = (Event) o;
         return id == o1.id &&
-                serviceId == o1.serviceId &&
+                procedureId == o1.procedureId &&
                 clientId == o1.clientId &&
                 masterId == o1.masterId &&
                 Objects.equals(startTime, o1.startTime);
@@ -90,14 +90,14 @@ public class Event {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, serviceId, masterId, clientId, startTime);
+        return Objects.hash(id, procedureId, masterId, clientId, startTime);
     }
 
     @Override
     public String toString() {
         return "Event{" +
                 "id=" + id +
-                ", serviceId='" + serviceId + '\'' +
+                ", serviceId='" + procedureId + '\'' +
                 ", masterId='" + masterId + '\'' +
                 ", clientId='" + clientId + '\'' +
                 ", startTime=" + startTime +
