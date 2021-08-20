@@ -8,7 +8,7 @@ import com.artuhin.project.services.EventsService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class MyEvents implements ICommand {
+public class MyProcedures implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         User user = (User) req.getSession().getAttribute("user");
@@ -19,6 +19,6 @@ public class MyEvents implements ICommand {
         if (user.getRole().equals(Role.MASTER)){
             req.setAttribute("events", eventsService.getByMasterId(user.getId()));
         }
-        return "pages/myevents.jsp";
+        return "pages/myprocedures.jsp";
     }
 }

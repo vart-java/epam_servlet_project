@@ -13,7 +13,7 @@ import java.security.NoSuchAlgorithmException;
 public class Authorization implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String login = req.getParameter("login");
+        String login = req.getParameter("username");
         String password = req.getParameter("password");
 
         UserService userService = ServiceFactory.getUserService();

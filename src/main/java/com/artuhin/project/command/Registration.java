@@ -29,7 +29,7 @@ public class Registration implements ICommand {
             return "pages/main.jsp";
         }
         req.setAttribute("message", "sorry, current login already taken");
-        return "pages/registration.jsp";
+        return "pages/authorization.jsp";
     }
 
     private String getCryptPassword (String password){

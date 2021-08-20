@@ -24,6 +24,15 @@ public class User {
 
     private int rating;
 
+    private String simpleName;
+
+    public String getSimpleName() {
+        if (login != null){
+            simpleName = login.substring(0, login.indexOf('@'));
+        }
+        return simpleName;
+    }
+
     public User() {
     }
 
@@ -79,6 +88,7 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
+        simpleName = login.substring(0, login.indexOf('@'));
     }
 
     public String getPassword() {

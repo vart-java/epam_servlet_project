@@ -13,7 +13,7 @@ public class Ratings implements ICommand {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         UserService userService = ServiceFactory.getUserService();
         List<User> masters = userService.getMastersByRating();
-        req.setAttribute("ratings",masters);
+        req.setAttribute("ratings", masters);
         return "pages/ratings.jsp";
     }
 }

@@ -13,7 +13,7 @@ public class CommandResolver {
     private CommandResolver() {
         commands.put("registration", new Registration());
         commands.put("wrong", new WrongCommand());
-        commands.put("myEvents", new MyEvents());
+        commands.put("procedures", new MyProcedures());
         commands.put("auth", new Authorization());
         commands.put("regToEvent", new RegisterToEvent());
         commands.put("logOut", new LogOut());

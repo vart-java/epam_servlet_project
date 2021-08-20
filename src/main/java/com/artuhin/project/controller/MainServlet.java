@@ -32,6 +32,5 @@ public class MainServlet extends HttpServlet {
     private void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String page = resolver.getCommand(req).execute(req, resp);
         req.getRequestDispatcher(page).forward(req, resp);
-
     }
 }
