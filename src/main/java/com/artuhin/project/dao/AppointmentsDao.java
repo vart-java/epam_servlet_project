@@ -118,9 +118,9 @@ public class AppointmentsDao {
 
     public List<Appointment> getAppointmentsByClientLogin(String login) {
         List<Appointment> appointments = new ArrayList<>();
-        String GET_EVENTS_BY_CLIENT_ID_SQL = "SELECT * FROM appointments WHERE client_login = ?";
+        String GET_APPOINTMENTS_BY_CLIENT_ID_SQL = "SELECT * FROM appointments WHERE client_login = ?";
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
-             PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_EVENTS_BY_CLIENT_ID_SQL)) {
+             PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_APPOINTMENTS_BY_CLIENT_ID_SQL)) {
             preparedStatement.setString(1, login);
             appointments = WithoutReflectionParser.getInstance().appointmentsParser(preparedStatement.executeQuery());
             System.out.println();

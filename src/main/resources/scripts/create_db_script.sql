@@ -24,6 +24,7 @@ CREATE TABLE public.users
     password character varying(64) NOT NULL,
     role_name character varying(32) NOT NULL,
     rating integer,
+    specialization character varying(32),
     PRIMARY KEY (login)
 );
 
@@ -67,6 +68,11 @@ ALTER TABLE public.appointments
 ALTER TABLE public.users
     ADD FOREIGN KEY (role_name)
         REFERENCES public.role (name)
+        NOT VALID;
+
+ALTER TABLE public.users
+    ADD FOREIGN KEY (specialization)
+        REFERENCES public.procedures (name)
         NOT VALID;
 
 CREATE OR REPLACE FUNCTION setting_duration_from_procedures()

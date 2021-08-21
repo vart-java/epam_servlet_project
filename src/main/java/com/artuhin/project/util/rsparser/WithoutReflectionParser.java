@@ -48,6 +48,7 @@ public class WithoutReflectionParser {
         try {
             while (resultSet.next()) {
                 Appointment appointment = new Appointment();
+                appointment.setId(resultSet.getLong("id"));
                 appointment.setProcedure(new Procedure(resultSet.getString("procedure_name"), resultSet.getLong("procedure_duration")));
                 appointment.setMasterLogin(resultSet.getString("master_login"));
                 appointment.setClientLogin(resultSet.getString("client_login"));
