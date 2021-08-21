@@ -1,17 +1,18 @@
 INSERT INTO role (name) VALUES ('administrator'), ('master'), ('client'), ('guest');
 
-INSERT INTO users (role_id, login, password) VALUES (1,'admin@google.com','8C6976E5B5410415BDE908BD4DEE15DFB167A9C873FC4BB8A81F6F2AB448A918');
-INSERT INTO users (role_id, login, password) VALUES (2,'master@google.com','D4183ED026A26965B4E632ECC8B785BD2D8B06E77A3A85970AEFA1F9A5B95B2B');
-INSERT INTO users (role_id, login, password) VALUES (3,'client@google.com','948FE603F61DC036B5C596DC09FE3CE3F3D30DC90F024C85F3C82DB2CCAB679D');
-INSERT INTO users (role_id, login, password) VALUES (4,'guest@google.com','84983C60F7DAADC1CB8698621F802C0D9F9A3C3C295C810748FB048115C186EC');
+INSERT INTO users (role_name, login, password) VALUES ('administrator','admin@google.com','8C6976E5B5410415BDE908BD4DEE15DFB167A9C873FC4BB8A81F6F2AB448A918');
+INSERT INTO users (role_name, login, password) VALUES ('master','master@google.com','D4183ED026A26965B4E632ECC8B785BD2D8B06E77A3A85970AEFA1F9A5B95B2B');
+INSERT INTO users (role_name, login, password) VALUES ('client','client@google.com','948FE603F61DC036B5C596DC09FE3CE3F3D30DC90F024C85F3C82DB2CCAB679D');
+INSERT INTO users (role_name, login, password) VALUES ('guest','guest@google.com','84983C60F7DAADC1CB8698621F802C0D9F9A3C3C295C810748FB048115C186EC');
 
 INSERT INTO procedures (name, duration) VALUES ('hair coloring', 10800);
 INSERT INTO procedures (name, duration) VALUES ('nail staining', 7200);
 INSERT INTO procedures (name, duration) VALUES ('eyelash extension', 7200);
 INSERT INTO procedures (name, duration) VALUES ('face massage', 3600);
 
-INSERT INTO events (procedure_id, master_id, client_id, start_time) VALUES (3, 2, 3, '2021-08-27 08:30:30');
-INSERT INTO events (procedure_id, master_id, client_id, start_time) VALUES (3, 2, 3, '2021-08-28 08:30:30');
-INSERT INTO events (procedure_id, master_id, client_id, start_time) VALUES (3, 2, 3, '2021-08-29 08:30:30');
-INSERT INTO events (procedure_id, master_id, client_id, start_time) VALUES (3, 2, 3, '2021-08-20 08:30:30');
-INSERT INTO events (procedure_id, master_id, client_id, start_time) VALUES (3, 2, 3, '2021-08-31 08:30:30');
+INSERT INTO appointments (procedure_name, master_login, client_login, start_time, is_confirmed) VALUES ('hair coloring', 'master@google.com', 'client@google.com', '2021-08-27 08:30:30', true);
+INSERT INTO appointments (procedure_name, master_login, client_login, start_time, is_confirmed) VALUES ('hair coloring', 'master@google.com', 'client@google.com', '2021-08-28 08:30:30', true);
+INSERT INTO appointments (procedure_name, master_login, client_login, start_time, is_confirmed) VALUES ('hair coloring', 'master@google.com', 'client@google.com', '2021-08-29 08:30:30', false);
+INSERT INTO appointments (procedure_name, master_login, client_login, start_time, is_confirmed) VALUES ('hair coloring', 'master@google.com', 'client@google.com', '2021-08-30 08:30:30', false);
+INSERT INTO appointments (procedure_name, master_login, client_login, start_time, is_confirmed) VALUES ('hair coloring', 'master@google.com', 'client@google.com', '2021-08-31 08:30:30', false);
+

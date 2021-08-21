@@ -7,8 +7,6 @@ import java.util.Objects;
 
 @Model
 public class Procedure {
-    @Column(name = "id")
-    private int id;
 
     @Column(name = "name")
     private String name;
@@ -19,19 +17,9 @@ public class Procedure {
     public Procedure() {
     }
 
-    public Procedure(int id, String name, long duration) {
-        this.id = id;
+    public Procedure(String name, long duration) {
         this.name = name;
         this.duration = duration;
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -55,20 +43,18 @@ public class Procedure {
         if (this == o) return true;
         if (!(o instanceof Procedure)) return false;
         Procedure o1 = (Procedure) o;
-        return id == o1.id &&
-                duration == o1.duration &&
+        return duration == o1.duration &&
                 Objects.equals(name, o1.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, duration);
+        return Objects.hash(name, duration);
     }
 
     @Override
     public String toString() {
         return "Procedure{" +
-                "id=" + id +
                 ", name=" + name +
                 ", duration='" + duration + '\'' +
                 '}';

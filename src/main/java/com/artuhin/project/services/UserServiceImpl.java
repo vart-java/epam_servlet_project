@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkUser(String login, String password) {
-        return DaoFactory.getInstance().getUserDao().authUser(login, password);
+        return DaoFactory.getInstance().getUserDao().chekingIfUserExisting(login, password);
     }
 
     @Override

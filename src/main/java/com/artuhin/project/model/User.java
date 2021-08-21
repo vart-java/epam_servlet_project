@@ -7,79 +7,24 @@ import java.util.Objects;
 
 @Model
 public class User {
-
-    @Column(name = "id")
-    private long id;
-
     @Column(name = "login")
     private String login;
-
     @Column(name = "password")
     private String password;
-
-    @Column(name = "role_id")
-    private int roleId;
-
+    @Column(name = "role_name")
     private Role role;
-
+    @Column(name = "rating")
     private int rating;
-
     private String simpleName;
 
-    public String getSimpleName() {
-        if (login != null){
-            simpleName = login.substring(0, login.indexOf('@'));
-        }
-        return simpleName;
-    }
-
     public User() {
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
     }
 
     public User(String login, String password, Role role) {
         this.login = login;
         this.password = password;
-        rating = 0;
-    }
-
-    public Role getRole() {
-        if (role != null) {
-            return role;
-        }
-        if (roleId != 0){
-            Role[] roles = Role.class.getEnumConstants();
-            for (Role role: roles) {
-                if (role.getId() == roleId){
-                    this.role = role;
-                }
-            }
-        }
-        return role;
-    }
-
-    public void setRole(Role role) {
         this.role = role;
-        this.roleId = role.getId();
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public int getRoleId() {
-        return role.getId();
+        rating = 0;
     }
 
     public String getLogin() {
@@ -99,28 +44,48 @@ public class User {
         this.password = password;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public String getSimpleName() {
+        if (login != null) {
+            simpleName = login.substring(0, login.indexOf('@'));
+        }
+        return simpleName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return id == user.id &&
-                role.getId() == user.role.getId() &&
-                login.equals(user.login) &&
-                rating == user.rating &&
-                password.equals(user.password);
+        return login.equals(user.login) &&
+                password.equals(user.password) &&
+                role == user.role &&
+                rating == user.rating;
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(id, role, login, password, rating);
+        return Objects.hash(login, password, role, rating);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
                 ", login='" + login + '\'' +
                 ", role=" + role +
                 ", rating=" + rating +

@@ -2,6 +2,7 @@ package com.artuhin.project.util.rsparser;
 
 import com.artuhin.project.util.annotations.Column;
 import com.artuhin.project.util.annotations.Model;
+import com.artuhin.project.util.annotations.ReferenceClass;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,23 +39,43 @@ public class ResultSetParser {
                     if (f.isAnnotationPresent(Column.class)) {
                         String name = f.getAnnotation(Column.class).name();
                         f.setAccessible(true);
-                        f.set(resultUnit, rs.getObject(name));
+                        if (f.isAnnotationPresent(ReferenceClass.class)) {
+                            f.set(resultUnit, partParse(rs, f));
+                        } else {
+                            f.set(resultUnit, rs.getObject(name));
+                        }
                     }
                 }
                 result.add(resultUnit);
                 resultUnit = (T) clazz.getConstructor().newInstance();
             }
-        }catch (SQLException e){
-            LOGGER.error("SQL exception from parser",e);
+        } catch (SQLException e) {
+            LOGGER.error("SQL exception from parser", e);
         } catch (NoSuchMethodException e) {
-            LOGGER.error("No such method!",e);
+            LOGGER.error("No such method!", e);
         } catch (InstantiationException e) {
-            LOGGER.error("Instantiation exception!",e);
+            LOGGER.error("Instantiation exception!", e);
         } catch (IllegalAccessException e) {
-            LOGGER.error("Can`t access to field",e);
+            LOGGER.error("Can`t access to field", e);
         } catch (InvocationTargetException e) {
-            LOGGER.error("Can`t invoke method",e);
+            LOGGER.error("Can`t invoke method", e);
         }
         return result;
+    }
+
+    private <F> F partParse(ResultSet rs, F f) throws SQLException, IllegalAccessException {
+        Class clazz = f.getClass();
+        if (!clazz.isAnnotationPresent(Model.class)) {
+            LOGGER.error("Can`t parse instance because that isn`t model.");
+            throw new IllegalArgumentException();
+        }
+        for (Field s : clazz.getDeclaredFields()) {
+            if (s.isAnnotationPresent(Column.class)) {
+                String name = s.getAnnotation(Column.class).name();
+                s.setAccessible(true);
+                s.set(clazz, rs.getObject(name));
+            }
+        }
+        return f;
     }
 }

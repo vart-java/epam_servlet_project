@@ -1,12 +1,12 @@
 package com.artuhin.project.factory;
 
-import com.artuhin.project.dao.EventsDao;
+import com.artuhin.project.dao.AppointmentsDao;
 import com.artuhin.project.dao.ProcedureAo;
 import com.artuhin.project.dao.UserDao;
 
 public class DaoFactory {
     private static final UserDao userDao = new UserDao();
-    private static final EventsDao eventsDao = new EventsDao();
+    private static final AppointmentsDao APPOINTMENTS_DAO = new AppointmentsDao();
     private static final ProcedureAo procedureAo = new ProcedureAo();
 
 
@@ -23,8 +23,8 @@ public class DaoFactory {
         return userDao;
     }
 
-    public EventsDao getEventDao() {
-        return eventsDao;
+    public AppointmentsDao getEventDao() {
+        return APPOINTMENTS_DAO;
     }
 
     public ProcedureAo getProcedureAo() {
