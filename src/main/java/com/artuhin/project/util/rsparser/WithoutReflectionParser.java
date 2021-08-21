@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class WithoutReflectionParser {
     private static Logger logger = LogManager.getLogger(WithoutReflectionParser.class);
@@ -28,7 +29,7 @@ public class WithoutReflectionParser {
                 User user = new User();
                 user.setLogin(resultSet.getString("login"));
                 user.setPassword(resultSet.getString("password"));
-                user.setRole(Role.valueOf(resultSet.getString("role_name")));
+                user.setRole(Role.valueOf(resultSet.getString("role_name").toUpperCase(Locale.ROOT)));
                 if (resultSet.getInt("rating") != 0) {
                     user.setRating(resultSet.getInt("rating"));
                 }

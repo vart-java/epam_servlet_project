@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface UserService extends Service {
 
-    int createUser(User user);
+    String createUser(User user);
 
-    User getUserByID(int id);
+    User getByLogin(String login);
 
     List<User> getAll();
 
@@ -17,17 +17,9 @@ public interface UserService extends Service {
 
     boolean updateUser(User user);
 
-    boolean delete(int id);
-
-    boolean addUsersToEvent(int serviceId, int masterId, int clientId, Timestamp timestamp);
+    boolean delete(String login);
 
     List<User> getMastersByRating();
 
-    List<User> getUsersByLogin();
-
     boolean checkUser(String login, String password);
-
-    User getByLogin(String login);
-
-    boolean vote(int eventId, int rating);
 }

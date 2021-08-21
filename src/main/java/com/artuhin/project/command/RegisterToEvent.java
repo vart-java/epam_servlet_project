@@ -16,7 +16,6 @@ public class RegisterToEvent implements ICommand {
         Timestamp timestamp = (Timestamp) req.getSession().getAttribute("timastamp");
 
         UserService userService = ServiceFactory.getUserService();
-        userService.addUsersToEvent(serviceId, masterId, userId, timestamp);
         return "pages/successfulregister.jsp";
     }
 }

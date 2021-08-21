@@ -50,14 +50,14 @@ public class AppointmentsDao {
     }
 
     public boolean update(Appointment appointment) {
-        String UPDATE_SQL = "UPDATE appointments SET service_id = ?, master_id = ?, client_id = ?, start_time = ? WHERE id = ?";
+        String UPDATE_SQL = "UPDATE appointments SET procedure_name = ?, master_login = ?, client_login = ?, start_time = ? WHERE id = ?";
         try (ConnectionProxy connection = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
-            preparedStatement.setLong(1, event.getProcedureId());
-            preparedStatement.setLong(2, event.getMasterId());
-            preparedStatement.setLong(3, event.getClientId());
-            preparedStatement.setTimestamp(4, event.getStartTime());
-            preparedStatement.setLong(5, event.getId());
+            preparedStatement.setString(1, appointment.getProcedure().getName());
+            preparedStatement.setString(2, appointment.getMasterLogin());
+            preparedStatement.setString(3, appointment.getClientLogin());
+            preparedStatement.setTimestamp(4, appointment.getStartTime());
+            preparedStatement.setLong(5, appointment.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
@@ -66,9 +66,8 @@ public class AppointmentsDao {
         return true;
     }
 
-    @Override
     public boolean delete(int id) {
-        String DELETE_SQL = "DELETE FROM events WHERE id = ?";
+        String DELETE_SQL = "DELETE FROM appointments WHERE id = ?";
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connectionProxy.prepareStatement(DELETE_SQL)) {
             preparedStatement.setInt(1, id);
@@ -80,38 +79,35 @@ public class AppointmentsDao {
         return true;
     }
 
-    @Override
-    public Event getByID(int id) {
-        Event event = new Event();
-        String GET_BY_ID_SQL = "SELECT * FROM events WHERE id = ?";
+    public Appointment getByID(int id) {
+        Appointment appointment = new Appointment();
+        String GET_BY_ID_SQL = "SELECT * FROM appointments WHERE id = ?";
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_BY_ID_SQL)) {
             preparedStatement.setInt(1, id);
-            event = ResultSetParser.getInstance().parse(preparedStatement.executeQuery(), new Event()).get(0);
+            appointment = ResultSetParser.getInstance().parse(preparedStatement.executeQuery(), new Appointment()).get(0);
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
         }
-        return event;
+        return appointment;
     }
 
-    @Override
-    public List<Event> getAll() {
-        List<Event> resultList = new ArrayList<>();
-        String GET_ALL_SQL = "SELECT * FROM events";
+    public List<Appointment> getAll() {
+        List<Appointment> resultList = new ArrayList<>();
+        String GET_ALL_SQL = "SELECT * FROM appointments";
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_ALL_SQL)) {
-            resultList = ResultSetParser.getInstance().parse(preparedStatement.executeQuery(), new Event());
+            resultList = ResultSetParser.getInstance().parse(preparedStatement.executeQuery(), new Appointment());
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
         }
         return resultList;
     }
 
-    @Override
     public boolean clearAll() {
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
              Statement statement = connectionProxy.createStatement()) {
-            String CLEAR_ALL_SQL = "DELETE FROM events";
+            String CLEAR_ALL_SQL = "DELETE * FROM appointments";
             statement.executeUpdate(CLEAR_ALL_SQL);
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
@@ -120,43 +116,30 @@ public class AppointmentsDao {
         return true;
     }
 
-    public List<Event> getEventsByClientId(long id) {
-        List<Event> events = new ArrayList<>();
-        String GET_EVENTS_BY_CLIENT_ID_SQL = "SELECT * FROM events WHERE client_id = ?";
+    public List<Appointment> getAppointmentsByClientLogin(String login) {
+        List<Appointment> appointments = new ArrayList<>();
+        String GET_EVENTS_BY_CLIENT_ID_SQL = "SELECT * FROM appointments WHERE client_login ?";
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_EVENTS_BY_CLIENT_ID_SQL)) {
-            preparedStatement.setLong(1, id);
-            events = ResultSetParser.getInstance().parse(preparedStatement.executeQuery(), new Event());
+            preparedStatement.setString(1, login);
+            appointments = ResultSetParser.getInstance().parse(preparedStatement.executeQuery(), new Appointment());
             System.out.println();
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
         }
-        return events;
+        return appointments;
     }
 
-    public List<Event> getEventsByMasterId(long id) {
-        List<Event> events = new ArrayList<>();
-        String GET_EVENTS_BY_MASTER_ID_SQL = "SELECT * FROM events WHERE master_id = ?";
+    public List<Appointment> getAppointmentByMasterLogin(String login) {
+        List<Appointment> appointments = new ArrayList<>();
+        String GET_APPOINTMENTS_BY_MASTER_ID_SQL = "SELECT * FROM appointments WHERE master_login = ?";
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
-             PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_EVENTS_BY_MASTER_ID_SQL)) {
-            preparedStatement.setLong(1, id);
-            events = ResultSetParser.getInstance().parse(preparedStatement.executeQuery(), new Event());
+             PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_APPOINTMENTS_BY_MASTER_ID_SQL)) {
+            preparedStatement.setString(1, login);
+            appointments = ResultSetParser.getInstance().parse(preparedStatement.executeQuery(), new Appointment());
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
         }
-        return events;
-    }
-
-    public List<Event> getEventsByServiceId(int id) {
-        List<Event> events = new ArrayList<>();
-        String GET_EVENTS_BY_SERVICE_ID_SQL = "SELECT * FROM events WHERE service_id = ?";
-        try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
-             PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_EVENTS_BY_SERVICE_ID_SQL)) {
-            preparedStatement.setInt(1, id);
-            events = ResultSetParser.getInstance().parse(preparedStatement.executeQuery(), new Event());
-        } catch (SQLException e) {
-            LOGGER.error(SQL_EXCEPTION, e);
-        }
-        return events;
+        return appointments;
     }
 }

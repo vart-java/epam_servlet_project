@@ -23,7 +23,7 @@ public class DaoFactory {
         return userDao;
     }
 
-    public AppointmentsDao getEventDao() {
+    public AppointmentsDao getAppointmentsDao() {
         return APPOINTMENTS_DAO;
     }
 

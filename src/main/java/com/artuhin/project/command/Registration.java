@@ -22,9 +22,9 @@ public class Registration implements ICommand {
         user.setLogin(req.getParameter("username"));
         user.setPassword(getCryptPassword(req.getParameter("password")));
         user.setRole(Role.GUEST);
-        int id = ServiceFactory.getUserService().createUser(user);
-        if (id != 0) {
-            user.setId(id);
+        String name = ServiceFactory.getUserService().createUser(user);
+
+        if (!name.equals("#userExists")) {
             req.getSession().setAttribute("user", user);
             return "pages/main.jsp";
         }

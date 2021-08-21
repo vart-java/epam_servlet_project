@@ -3,8 +3,8 @@ package com.artuhin.project.factory;
 
 import com.artuhin.project.services.dynamicproxy.ProxyService;
 import com.artuhin.project.util.annotations.Transactional;
-import com.artuhin.project.services.EventsService;
-import com.artuhin.project.services.EventsServiceImpl;
+import com.artuhin.project.services.AppointmentsService;
+import com.artuhin.project.services.AppointmentsServiceImpl;
 import com.artuhin.project.services.Service;
 import com.artuhin.project.services.UserService;
 import com.artuhin.project.services.UserServiceImpl;
@@ -15,7 +15,7 @@ public class ServiceFactory {
 
     private static ServiceFactory ourInstance = new ServiceFactory();
     private static UserService userService = getService(UserServiceImpl.getInstance());
-    private static EventsService eventsService = getService(EventsServiceImpl.getInstance());
+    private static AppointmentsService appointmentsService = getService(AppointmentsServiceImpl.getInstance());
 
     public static ServiceFactory getInstance() {
         return ourInstance;
@@ -41,8 +41,8 @@ public class ServiceFactory {
         return ourInstance;
     }
 
-    public static EventsService getEventsService() {
-        return eventsService;
+    public static AppointmentsService getEventsService() {
+        return appointmentsService;
     }
 
     private static boolean isTransactional(Class clazz) {
