@@ -1,17 +1,10 @@
 package com.artuhin.project.model;
 
-import com.artuhin.project.util.annotations.Column;
-import com.artuhin.project.util.annotations.Model;
-
 import java.util.Objects;
 
-@Model
 public class Procedure {
 
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "duration")
     private long duration;
 
     public Procedure() {

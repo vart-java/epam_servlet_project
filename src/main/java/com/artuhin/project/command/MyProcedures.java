@@ -12,12 +12,12 @@ public class MyProcedures implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         User user = (User) req.getSession().getAttribute("user");
-        AppointmentsService appointmentsService = ServiceFactory.getEventsService();
+        AppointmentsService appointmentsService = ServiceFactory.getAppointmentsService();
         if (user.getRole().equals(Role.CLIENT)){
-            req.setAttribute("events", appointmentsService.getByClientLogin(user.getLogin()));
+            req.setAttribute("appointments", appointmentsService.getByClientLogin(user.getLogin()));
         }
         if (user.getRole().equals(Role.MASTER)){
-            req.setAttribute("events", appointmentsService.getByMasterLogin(user.getLogin()));
+            req.setAttribute("appointments", appointmentsService.getByMasterLogin(user.getLogin()));
         }
         return "pages/myprocedures.jsp";
     }

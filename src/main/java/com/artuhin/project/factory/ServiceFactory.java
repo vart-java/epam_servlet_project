@@ -41,7 +41,7 @@ public class ServiceFactory {
         return ourInstance;
     }
 
-    public static AppointmentsService getEventsService() {
+    public static AppointmentsService getAppointmentsService() {
         return appointmentsService;
     }
 

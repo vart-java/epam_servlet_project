@@ -1,19 +1,11 @@
 package com.artuhin.project.model;
 
-import com.artuhin.project.util.annotations.Column;
-import com.artuhin.project.util.annotations.Model;
-
 import java.util.Objects;
 
-@Model
 public class User {
-    @Column(name = "login")
     private String login;
-    @Column(name = "password")
     private String password;
-    @Column(name = "role_name")
     private Role role;
-    @Column(name = "rating")
     private int rating;
     private String simpleName;
 

@@ -15,12 +15,15 @@
             <p>My events: </p>
         </div>
         <ul class="list-group">
-            <c:forEach var="event" items="${requestScope.events}">
+            <c:forEach var="appointment" items="${requestScope.appointments}">
                 <li class="list-group-item">
                         <div class="row">
                             <div class="col-8">
-                                <p><c:out value="${event.procedureId}"/></p>
-                                <p><c:out value="${event.startTime}"/></p>
+                                <p><c:out value="${appointment.procedure.name}"/></p>
+                                <p><c:out value="${appointment.masterLogin}"/></p>
+                                <p><c:out value="${appointment.startTime}"/></p>
+                                <p><c:out value="${appointment.procedure.duration}"/></p>
+                                <p><c:out value="${appointment.confirmed}"/></p>
                             </div>
                         </div>
                 </li>

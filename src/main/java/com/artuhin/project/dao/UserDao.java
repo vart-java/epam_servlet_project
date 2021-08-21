@@ -2,7 +2,6 @@ package com.artuhin.project.dao;
 
 import com.artuhin.project.model.Role;
 import com.artuhin.project.model.User;
-import com.artuhin.project.util.rsparser.ResultSetParser;
 import com.artuhin.project.util.rsparser.WithoutReflectionParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,8 +32,8 @@ public class UserDao {
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.executeUpdate();
             preparedStatement1.setString(1, user.getLogin());
-            User user1 = WithoutReflectionParser.userParser(preparedStatement1.executeQuery()).get(0);
-            name=user1.getSimpleName();
+            User user1 = WithoutReflectionParser.getInstance().usersParser(preparedStatement1.executeQuery()).get(0);
+            name = user1.getSimpleName();
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
             return "#userExists";
@@ -75,7 +74,7 @@ public class UserDao {
         String GET_ALL_SQL = "SELECT * FROM users ORDER BY login";
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_ALL_SQL)) {
-            resultList = ResultSetParser.getInstance().parse(preparedStatement.executeQuery(), new User());
+            resultList = WithoutReflectionParser.getInstance().usersParser(preparedStatement.executeQuery());
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
         }
@@ -100,7 +99,7 @@ public class UserDao {
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_ALL_SQL)) {
             preparedStatement.setString(1, role.toString());
-            resultList = ResultSetParser.getInstance().parse(preparedStatement.executeQuery(), new User());
+            resultList = WithoutReflectionParser.getInstance().usersParser(preparedStatement.executeQuery());
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
         }
@@ -113,7 +112,7 @@ public class UserDao {
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_MASTERS_BY_RATING_SQL)) {
             preparedStatement.setString(1, Role.MASTER.toString());
-            resultList = ResultSetParser.getInstance().parse(preparedStatement.executeQuery(), new User());
+            resultList = WithoutReflectionParser.getInstance().usersParser(preparedStatement.executeQuery());
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
         }
@@ -127,7 +126,7 @@ public class UserDao {
              PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_MASTERS_BY_RATING_SQL)) {
             preparedStatement.setString(1, Role.MASTER.toString());
             preparedStatement.setInt(2, rating);
-            resultList = ResultSetParser.getInstance().parse(preparedStatement.executeQuery(), new User());
+            resultList = WithoutReflectionParser.getInstance().usersParser(preparedStatement.executeQuery());
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
         }
@@ -140,7 +139,7 @@ public class UserDao {
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_MASTERS_BY_LOGINS_SQL)) {
             preparedStatement.setString(1, Role.MASTER.toString());
-            resultList = ResultSetParser.getInstance().parse(preparedStatement.executeQuery(), new User());
+            resultList = WithoutReflectionParser.getInstance().usersParser(preparedStatement.executeQuery());
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
         }
@@ -148,7 +147,7 @@ public class UserDao {
     }
 
 
-    public boolean chekingIfUserExisting (String login, String password) {
+    public boolean chekingIfUserExisting(String login, String password) {
         boolean result = false;
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connectionProxy
@@ -168,7 +167,7 @@ public class UserDao {
              PreparedStatement preparedStatement = connectionProxy
                      .prepareStatement("SELECT * FROM users WHERE login = ?")) {
             preparedStatement.setString(1, login);
-            List<User> users = WithoutReflectionParser.userParser(preparedStatement.executeQuery());
+            List<User> users = WithoutReflectionParser.getInstance().usersParser(preparedStatement.executeQuery());
             if (!users.isEmpty()) {
                 user = users.get(0);
             }

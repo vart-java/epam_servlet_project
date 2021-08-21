@@ -1,5 +1,7 @@
 package com.artuhin.project.util.rsparser;
 
+import com.artuhin.project.model.Appointment;
+import com.artuhin.project.model.Procedure;
 import com.artuhin.project.model.Role;
 import com.artuhin.project.model.User;
 import org.apache.logging.log4j.LogManager;
@@ -22,7 +24,7 @@ public class WithoutReflectionParser {
         return instance;
     }
 
-    public static List<User> userParser(ResultSet resultSet) {
+    public List<User> usersParser(ResultSet resultSet) {
         List<User> userList = new ArrayList<>();
         try {
             while (resultSet.next()) {
@@ -39,6 +41,39 @@ public class WithoutReflectionParser {
             logger.error("SQL exception from parser", e);
         }
         return userList;
+    }
+
+    public List<Appointment> appointmentsParser(ResultSet resultSet) {
+        List<Appointment> appointmentsList = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+                Appointment appointment = new Appointment();
+                appointment.setProcedure(new Procedure(resultSet.getString("procedure_name"), resultSet.getLong("procedure_duration")));
+                appointment.setMasterLogin(resultSet.getString("master_login"));
+                appointment.setClientLogin(resultSet.getString("client_login"));
+                appointment.setStartTime(resultSet.getTimestamp("start_time"));
+                appointment.setConfirmed(resultSet.getBoolean("is_confirmed"));
+                appointmentsList.add(appointment);
+            }
+        } catch (SQLException e) {
+            logger.error("SQL exception from parser", e);
+        }
+        return appointmentsList;
+    }
+
+    public List<Procedure> procedureParser(ResultSet resultSet) {
+        List<Procedure> procedureList = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+                Procedure procedure = new Procedure();
+                procedure.setName(resultSet.getString("name"));
+                procedure.setDuration(resultSet.getLong("duration"));
+                procedureList.add(procedure);
+            }
+        } catch (SQLException e) {
+            logger.error("SQL exception from parser", e);
+        }
+        return procedureList;
     }
 }
 

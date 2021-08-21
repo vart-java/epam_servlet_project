@@ -1,30 +1,15 @@
 package com.artuhin.project.model;
 
-import com.artuhin.project.util.annotations.Column;
-import com.artuhin.project.util.annotations.Model;
-
-import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-@Model
 public class Appointment {
 
-    @Column(name = "id")
     private long id;
-
     private Procedure procedure;
-
-    @Column(name = "master_login")
     private String masterLogin;
-
-    @Column(name = "client_login")
     private String clientLogin;
-
-    @Column(name = "start_time")
     private Timestamp startTime;
-
-    @Column(name = "is_confirmed")
     private boolean isConfirmed;
 
     public long getId() {
