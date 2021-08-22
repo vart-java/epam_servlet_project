@@ -11,8 +11,7 @@ import java.util.List;
 public class Ratings implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        UserService userService = ServiceFactory.getUserService();
-        List<User> masters = userService.getMastersByRating();
+        List<List<User>> masters = ServiceFactory.getUserService().getAllMastersBySpecilizationSortByRating();
         req.setAttribute("ratings", masters);
         return "pages/ratings.jsp";
     }

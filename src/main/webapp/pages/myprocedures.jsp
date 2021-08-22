@@ -31,7 +31,7 @@
                             Registration
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                            <li><a class="dropdown-item" href="#">By master rating</a></li>
+                            <li><a class="dropdown-item" href="/main?command=ratings">By master rating</a></li>
                             <li><a class="dropdown-item" href="#">By master name</a></li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -55,7 +55,7 @@
     </nav>
 </header>
 
-<h1> Your procedures <span class="badge bg-primary">New</span></h1>
+<h1 class="text-center"> Your procedures <span class="badge bg-primary">New</span></h1>
 <table class="table table-striped table-hover">
     <thead>
     <tr>

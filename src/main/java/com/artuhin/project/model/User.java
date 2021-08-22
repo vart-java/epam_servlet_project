@@ -8,6 +8,7 @@ public class User {
     private Role role;
     private int rating;
     private String simpleName;
+    private Procedure specialization;
 
     public User() {
     }
@@ -17,6 +18,15 @@ public class User {
         this.password = password;
         this.role = role;
         rating = 0;
+    }
+
+    public User(String login, String password, Role role, int rating, String simpleName, Procedure procedure) {
+        this.login = login;
+        this.password = password;
+        this.role = role;
+        this.rating = rating;
+        this.simpleName = simpleName;
+        this.specialization = procedure;
     }
 
     public String getLogin() {
@@ -59,6 +69,14 @@ public class User {
         return simpleName;
     }
 
+    public Procedure getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(Procedure specialization) {
+        this.specialization = specialization;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,12 +85,13 @@ public class User {
         return login.equals(user.login) &&
                 password.equals(user.password) &&
                 role == user.role &&
-                rating == user.rating;
+                rating == user.rating &&
+                specialization.equals(user.specialization);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password, role, rating);
+        return Objects.hash(login, password, role, rating, specialization);
     }
 
     @Override
@@ -81,6 +100,7 @@ public class User {
                 ", login='" + login + '\'' +
                 ", role=" + role +
                 ", rating=" + rating +
+                ", doingProcedure=" + specialization +
                 '}';
     }
 }

@@ -35,6 +35,9 @@ public class WithoutReflectionParser {
                 if (resultSet.getInt("rating") != 0) {
                     user.setRating(resultSet.getInt("rating"));
                 }
+                if (resultSet.getString("specialization") != null) {
+                    user.setSpecialization(new Procedure(resultSet.getString("specialization")));
+                }
                 userList.add(user);
             }
         } catch (SQLException e) {

@@ -56,7 +56,7 @@
                             Registration
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                            <li><a class="dropdown-item" href="#">By master rating</a></li>
+                            <li><a class="dropdown-item" href="/main?command=ratings">By master rating</a></li>
                             <li><a class="dropdown-item" href="#">By master name</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">By procedure</a></li>

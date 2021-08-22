@@ -45,6 +45,10 @@ public class UserServiceImpl implements UserService {
         return DaoFactory.getInstance().getUserDao().getAllMastersSortByRating();
     }
 
+    @Override
+    public List<List<User>> getAllMastersBySpecilizationSortByRating() {
+        return DaoFactory.getInstance().getUserDao().getAllMastersBySpecializationSortByRating();
+    }
 
     @Override
     public boolean checkUser(String login, String password) {

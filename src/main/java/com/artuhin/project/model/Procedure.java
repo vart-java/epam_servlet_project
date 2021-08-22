@@ -10,6 +10,10 @@ public class Procedure {
     public Procedure() {
     }
 
+    public Procedure(String name) {
+        this.name = name;
+    }
+
     public Procedure(String name, long duration) {
         this.name = name;
         this.duration = duration;

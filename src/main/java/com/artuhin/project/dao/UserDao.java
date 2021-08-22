@@ -1,5 +1,6 @@
 package com.artuhin.project.dao;
 
+import com.artuhin.project.model.Procedure;
 import com.artuhin.project.model.Role;
 import com.artuhin.project.model.User;
 import com.artuhin.project.util.rsparser.WithoutReflectionParser;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class UserDao {
 
@@ -113,6 +115,31 @@ public class UserDao {
              PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_MASTERS_BY_RATING_SQL)) {
             preparedStatement.setString(1, Role.MASTER.toString());
             resultList = WithoutReflectionParser.getInstance().usersParser(preparedStatement.executeQuery());
+        } catch (SQLException e) {
+            LOGGER.error(SQL_EXCEPTION, e);
+        }
+        return resultList;
+    }
+
+    public List<List<User>> getAllMastersBySpecializationSortByRating() {
+        List<List<User>> resultList = new ArrayList<>();
+        String GET_MASTERS_BY_RATING_SQL = "SELECT * FROM users WHERE role_name = ? ORDER BY rating DESC";
+        String GET_PROCEDURES_SQL = "SELECT * FROM procedures";
+        try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
+             PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_MASTERS_BY_RATING_SQL);
+             PreparedStatement preparedStatement1 = connectionProxy.prepareStatement(GET_PROCEDURES_SQL)) {
+            List<Procedure> procedureList = WithoutReflectionParser.getInstance().procedureParser(preparedStatement1.executeQuery());
+            preparedStatement.setString(1, Role.MASTER.toString().toLowerCase(Locale.ROOT));
+            List <User> userList = WithoutReflectionParser.getInstance().usersParser(preparedStatement.executeQuery());
+            for (Procedure p: procedureList) {
+                List<User> users = new ArrayList<>();
+                for (User user: userList) {
+                    if (user.getSpecialization().getName().equals(p.getName())){
+                        users.add(user);
+                    }
+                }
+                resultList.add(users);
+            }
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
         }

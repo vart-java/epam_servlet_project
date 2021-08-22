@@ -21,5 +21,7 @@ public interface UserService extends Service {
 
     List<User> getMastersByRating();
 
+    List<List<User>> getAllMastersBySpecilizationSortByRating();
+
     boolean checkUser(String login, String password);
 }
