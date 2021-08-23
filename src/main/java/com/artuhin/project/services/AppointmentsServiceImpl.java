@@ -55,4 +55,11 @@ public class AppointmentsServiceImpl implements AppointmentsService {
     public List<Appointment> getByMasterLogin(String login) {
         return DaoFactory.getInstance().getAppointmentsDao().getAppointmentByMasterLogin(login);
     }
+
+    @Override
+    public List<Appointment> getByMasterLoginByDay(String login, int day) {
+        return DaoFactory.getInstance().getAppointmentsDao().getAppointmentByMasterLoginByDay(login, day);
+    }
+
+
 }

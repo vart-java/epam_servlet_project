@@ -1,5 +1,6 @@
 package com.artuhin.project.model;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class User {
@@ -35,7 +36,7 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
-        simpleName = login.substring(0, login.indexOf('@'));
+        simpleName = login.substring(0, 1).toUpperCase(Locale.ROOT)+login.substring(1, login.indexOf('@'));
     }
 
     public String getPassword() {
@@ -63,9 +64,6 @@ public class User {
     }
 
     public String getSimpleName() {
-        if (login != null) {
-            simpleName = login.substring(0, login.indexOf('@'));
-        }
         return simpleName;
     }
 

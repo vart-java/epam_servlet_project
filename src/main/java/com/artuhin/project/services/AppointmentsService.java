@@ -20,4 +20,8 @@ public interface AppointmentsService extends Service {
     List<Appointment> getByClientLogin(String login);
 
     List<Appointment> getByMasterLogin(String login);
+
+    List<Appointment> getByMasterLoginByDay(String login, int day);
+
+
 }

@@ -1,27 +1,24 @@
 package com.artuhin.project.factory;
 
 
+import com.artuhin.project.services.*;
 import com.artuhin.project.services.dynamicproxy.ProxyService;
 import com.artuhin.project.util.annotations.Transactional;
-import com.artuhin.project.services.AppointmentsService;
-import com.artuhin.project.services.AppointmentsServiceImpl;
-import com.artuhin.project.services.Service;
-import com.artuhin.project.services.UserService;
-import com.artuhin.project.services.UserServiceImpl;
 
 import java.util.Arrays;
 
 public class ServiceFactory {
 
-    private static ServiceFactory ourInstance = new ServiceFactory();
+    private static ServiceFactory instance = new ServiceFactory();
     private static UserService userService = getService(UserServiceImpl.getInstance());
     private static AppointmentsService appointmentsService = getService(AppointmentsServiceImpl.getInstance());
-
-    public static ServiceFactory getInstance() {
-        return ourInstance;
-    }
+    private static ProcedureService procedureService = getService(ProcedureServiceImpl.getInstance());
 
     private ServiceFactory() {
+    }
+
+    public static ServiceFactory getInstance() {
+        return instance;
     }
 
     private static <T extends Service> T getService(T t) {
@@ -33,17 +30,15 @@ public class ServiceFactory {
         return t;
     }
 
-    public static UserService getUserService() {
+    public UserService getUserService() {
         return userService;
     }
 
-    public static ServiceFactory getOurInstance() {
-        return ourInstance;
-    }
-
-    public static AppointmentsService getAppointmentsService() {
+    public AppointmentsService getAppointmentsService() {
         return appointmentsService;
     }
+
+    public ProcedureService getProcedureService() { return procedureService; }
 
     private static boolean isTransactional(Class clazz) {
         return Arrays.stream(clazz.getMethods())

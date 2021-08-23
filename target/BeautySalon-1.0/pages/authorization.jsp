@@ -38,11 +38,11 @@
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
         <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="username" name="password" minlength="6" maxlength="24">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="username" minlength="6" maxlength="24">
             <label for="floatingInput">Email address</label>
         </div>
         <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name ="password" name="password" pattern="[a-zA-Z0-9]+" minlength="5" maxlength="8">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name ="password" pattern="[a-zA-Z0-9]+" minlength="5" maxlength="8">
             <label for="floatingPassword">Password</label>
         </div>
 

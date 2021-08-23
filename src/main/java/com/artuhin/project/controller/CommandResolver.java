@@ -15,7 +15,7 @@ public class CommandResolver {
         commands.put("wrong", new WrongCommand());
         commands.put("procedures", new MyProcedures());
         commands.put("auth", new Authorization());
-        commands.put("regToEvent", new RegisterToEvent());
+        commands.put("regToApp", new RegisterToAppointment());
         commands.put("logOut", new LogOut());
         commands.put("main", new Main());
         commands.put("ratings",new Ratings());

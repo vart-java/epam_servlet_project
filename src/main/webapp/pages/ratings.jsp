@@ -55,24 +55,39 @@
     </nav>
 </header>
 
-<h1 class="text-center"> Rating of our masters <span class="badge bg-primary">New</span></h1>
+<h1 class="text-center"> Rating of our masters <span
+        class="badge bg-primary">Click on masters name for registration</span></h1>
 <div class="container tables">
     <div class="row">
         <c:forEach var="UserList" items="${requestScope.ratings}">
             <div class="col-lg-3">
-                <table class="table align-middle table-striped table-hover table-bordered">
-                    <h4 class="text-center"><c:out value="${UserList.get(0).specialization.name.toUpperCase()}"/></h4>
+                <table class="table align-middle">
+                    <h4 class="text-center"><c:out
+                            value="${UserList.get(0).specialization.name.toUpperCase()}"/></h4>
                     <thead>
                     <tr>
-                        <th scope="col">Master name</th>
-                        <th scope="col">Сustomer ratings</th>
+                        <th scope="col" class="text-center">Name</th>
+                        <th scope="col" class="text-center">Rating</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach var="user" items="${UserList}">
-                        <tr class="table">
-                            <td class="text-center"><c:out value="${user.simpleName}"/></td>
-                            <td class="text-center"><c:out value="${user.rating}"/></td>
+                        <tr class="table table-borderless">
+                            <td>
+                                <button type="button" class="btn btn-primary dropdown-toggle"
+                                        data-bs-toggle="dropdown">
+                                    <c:out value="${user.simpleName}"/>
+                                </button>
+                                <div class="dropdown-menu p-2 shadow rounded-3" style="width: 300px"
+                                     id="dropdownCalendar">
+                                    <form action="/main" method="post">
+                                    <input type="date" max="30.08.2021" name="dateAppointment">
+                                        <input type="hidden" name="master" value="${user.login}">
+                                    <button type="submit" class="btn btn-primary" name="command" value="regToApp">submit</button>
+                                    </form>
+                                </div>
+                            </td>
+                            <td class="text-center align-middle"><c:out value="${user.rating}"/></td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -81,6 +96,9 @@
         </c:forEach>
     </div>
 </div>
+
+
 <script defer src="/js/bootstrap.bundle.js"></script>
+<script defer src="/js/jquery.js"></script>
 </body>
 </html>

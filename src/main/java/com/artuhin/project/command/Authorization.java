@@ -16,7 +16,7 @@ public class Authorization implements ICommand {
         String login = req.getParameter("username");
         String password = req.getParameter("password");
 
-        UserService userService = ServiceFactory.getUserService();
+        UserService userService = ServiceFactory.getInstance().getUserService();
         boolean isValid = userService.checkUser(login, getCryptPassword(password));
         if (isValid) {
             User user = userService.getByLogin(login);

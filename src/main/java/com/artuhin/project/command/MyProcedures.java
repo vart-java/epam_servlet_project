@@ -12,7 +12,7 @@ public class MyProcedures implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         User user = (User) req.getSession().getAttribute("user");
-        AppointmentsService appointmentsService = ServiceFactory.getAppointmentsService();
+        AppointmentsService appointmentsService = ServiceFactory.getInstance().getAppointmentsService();
         if (user.getRole().equals(Role.CLIENT)){
             req.setAttribute("appointments", appointmentsService.getByClientLogin(user.getLogin()));
         }

@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,5 +142,25 @@ public class AppointmentsDao {
             LOGGER.error(SQL_EXCEPTION, e);
         }
         return appointments;
+    }
+
+    public List<Appointment> getAppointmentByMasterLoginByDay(String login, int day) {
+        List<Appointment> appointments = new ArrayList<>();
+        List<Appointment> returnAppointments = new ArrayList<>();
+        String GET_APPOINTMENTS_BY_MASTER_ID_SQL = "SELECT * FROM appointments WHERE master_login = ?";
+        try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
+             PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_APPOINTMENTS_BY_MASTER_ID_SQL)) {
+            preparedStatement.setString(1, login);
+            appointments = WithoutReflectionParser.getInstance().appointmentsParser(preparedStatement.executeQuery());
+            returnAppointments = new ArrayList<>();
+            for (Appointment appointment : appointments) {
+                if (appointment.getStartTime().toLocalDateTime().getDayOfYear() == day) {
+                    returnAppointments.add(appointment);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error(SQL_EXCEPTION, e);
+        }
+        return returnAppointments;
     }
 }
