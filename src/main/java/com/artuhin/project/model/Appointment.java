@@ -69,6 +69,14 @@ public class Appointment {
         this.isConfirmed = isConfirmed;
     }
 
+    public Appointment(Procedure procedure, String masterLogin, String clientLogin, Timestamp startTime, Boolean isConfirmed) {
+        this.procedure = procedure;
+        this.masterLogin = masterLogin;
+        this.clientLogin = clientLogin;
+        this.startTime = startTime;
+        this.isConfirmed = isConfirmed;
+    }
+
     public Appointment() {
     }
 

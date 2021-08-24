@@ -26,4 +26,19 @@ public class ProcedureDao {
         }
         return procedures;
     }
+
+    public Procedure getProcedureByName(String name) {
+        List<Procedure> procedures = new ArrayList<>();
+        String GET_SQL = "SELECT * FROM procedures WHERE name = ?";
+        try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
+             PreparedStatement preparedStatement = connectionProxy
+                     .prepareStatement(GET_SQL)) {
+            preparedStatement.setString(1, name);
+
+            procedures = WithoutReflectionParser.getInstance().procedureParser(preparedStatement.executeQuery());
+        } catch (SQLException e) {
+            LOGGER.error(SQL_EXCEPTION, e);
+        }
+        return procedures.get(0);
+    }
 }

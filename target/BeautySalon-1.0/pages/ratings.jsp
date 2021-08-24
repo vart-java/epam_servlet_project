@@ -32,7 +32,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                             <li><a class="dropdown-item" href="/main?command=ratings">By master rating</a></li>
-                            <li><a class="dropdown-item" href="#">By master name</a></li>
+                            <li><a class="dropdown-item" href="/main?command=regByMasterName">By master name</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -81,7 +81,8 @@
                                 <div class="dropdown-menu p-2 shadow rounded-3" style="width: 300px"
                                      id="dropdownCalendar">
                                     <form action="/main" method="post">
-                                    <input type="date" max="30.08.2021" name="dateAppointment">
+                                    <input type="date" value=${requestScope.dateNow1}
+                                           min=${requestScope.dateNow1} max=${requestScope.dateNow7} name="dateAppointment">
                                         <input type="hidden" name="master" value="${user.login}">
                                     <button type="submit" class="btn btn-primary" name="command" value="regToApp">submit</button>
                                     </form>

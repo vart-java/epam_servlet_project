@@ -19,7 +19,7 @@ public interface UserService extends Service {
 
     boolean delete(String login);
 
-    List<User> getMastersByRating();
+    List<User> getAllMastersSortByRating();
 
     List<List<User>> getAllMastersBySpecilizationSortByRating();
 

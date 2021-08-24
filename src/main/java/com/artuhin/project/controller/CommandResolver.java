@@ -19,6 +19,7 @@ public class CommandResolver {
         commands.put("logOut", new LogOut());
         commands.put("main", new Main());
         commands.put("ratings",new Ratings());
+        commands.put("regByMasterName",new RegisterByMasterName());
     }
 
     public static CommandResolver getInstance() {

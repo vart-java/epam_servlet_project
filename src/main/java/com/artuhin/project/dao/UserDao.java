@@ -113,7 +113,7 @@ public class UserDao {
         String GET_MASTERS_BY_RATING_SQL = "SELECT * FROM users WHERE role_name = ? ORDER BY rating DESC";
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_MASTERS_BY_RATING_SQL)) {
-            preparedStatement.setString(1, Role.MASTER.toString());
+            preparedStatement.setString(1, Role.MASTER.toString().toLowerCase(Locale.ROOT));
             resultList = WithoutReflectionParser.getInstance().usersParser(preparedStatement.executeQuery());
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);

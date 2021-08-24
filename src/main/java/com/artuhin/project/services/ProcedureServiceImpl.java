@@ -18,4 +18,9 @@ public class ProcedureServiceImpl implements ProcedureService{
     public List<Procedure> getAll() {
         return DaoFactory.getInstance().getProcedureDao().getAll();
     }
+
+    @Override
+    public Procedure getProcedureByName(String name) {
+        return DaoFactory.getInstance().getProcedureDao().getProcedureByName(name);
+    }
 }

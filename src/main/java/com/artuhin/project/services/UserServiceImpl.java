@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getMastersByRating() {
+    public List<User> getAllMastersSortByRating() {
         return DaoFactory.getInstance().getUserDao().getAllMastersSortByRating();
     }
 
