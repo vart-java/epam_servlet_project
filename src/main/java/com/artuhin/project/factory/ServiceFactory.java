@@ -9,15 +9,19 @@ import java.util.Arrays;
 
 public class ServiceFactory {
 
-    private static ServiceFactory instance = new ServiceFactory();
+    private static ServiceFactory instance;
     private static UserService userService = getService(UserServiceImpl.getInstance());
     private static AppointmentsService appointmentsService = getService(AppointmentsServiceImpl.getInstance());
     private static ProcedureService procedureService = getService(ProcedureServiceImpl.getInstance());
+    private static NotificationService notificationService = getService(NotificationServiceImpl.getInstance());
 
     private ServiceFactory() {
     }
 
-    public static ServiceFactory getInstance() {
+    public static synchronized ServiceFactory getInstance() {
+        if (instance == null) {
+            instance = new ServiceFactory();
+        }
         return instance;
     }
 
@@ -30,6 +34,10 @@ public class ServiceFactory {
         return t;
     }
 
+    public static NotificationService getNotificationService() {
+        return notificationService;
+    }
+
     public UserService getUserService() {
         return userService;
     }
@@ -38,7 +46,9 @@ public class ServiceFactory {
         return appointmentsService;
     }
 
-    public ProcedureService getProcedureService() { return procedureService; }
+    public ProcedureService getProcedureService() {
+        return procedureService;
+    }
 
     private static boolean isTransactional(Class clazz) {
         return Arrays.stream(clazz.getMethods())

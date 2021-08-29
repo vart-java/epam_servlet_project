@@ -1,5 +1,7 @@
 package com.artuhin.project.model;
 
+import org.apache.commons.math3.util.Precision;
+
 import java.util.Locale;
 import java.util.Objects;
 
@@ -7,7 +9,8 @@ public class User {
     private String login;
     private String password;
     private Role role;
-    private int rating;
+    private double rating;
+    private int recallCount;
     private String simpleName;
     private Procedure specialization;
 
@@ -55,11 +58,15 @@ public class User {
         this.role = role;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public double getSimpleRating() {
+        return Precision.round(rating, 2);
+    }
+
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
@@ -75,6 +82,14 @@ public class User {
         this.specialization = specialization;
     }
 
+    public int getRecallCount() {
+        return recallCount;
+    }
+
+    public void setRecallCount(int recall_count) {
+        this.recallCount = recall_count;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,12 +99,13 @@ public class User {
                 password.equals(user.password) &&
                 role == user.role &&
                 rating == user.rating &&
+                recallCount == user.recallCount &&
                 specialization.equals(user.specialization);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password, role, rating, specialization);
+        return Objects.hash(login, password, role, rating, specialization, recallCount);
     }
 
     @Override
@@ -99,6 +115,7 @@ public class User {
                 ", role=" + role +
                 ", rating=" + rating +
                 ", doingProcedure=" + specialization +
+                ", recallCount=" + recallCount +
                 '}';
     }
 }

@@ -28,7 +28,7 @@ public class DbConnector {
         comboPooledDataSource = new ComboPooledDataSource();
         Properties properties = new Properties();
 
-        try (InputStream is = getClass().getResourceAsStream("/db_connection.properties")) {
+        try (InputStream is = getClass().getResourceAsStream("/properties/db_connection.properties")) {
             properties.load(is);
             comboPooledDataSource.setDriverClass(properties.getProperty("jdbc_driver"));
         } catch (PropertyVetoException | IOException e) {

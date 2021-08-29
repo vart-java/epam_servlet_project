@@ -1,5 +1,6 @@
 package com.artuhin.project.services;
 
+import com.artuhin.project.model.Role;
 import com.artuhin.project.model.User;
 
 import java.sql.Timestamp;
@@ -24,4 +25,10 @@ public interface UserService extends Service {
     List<List<User>> getAllMastersBySpecilizationSortByRating();
 
     boolean checkUser(String login, String password);
+
+    boolean updateRating(String login, int recall);
+
+    boolean updateRole(String login, Role role);
+
+    List<List<User>> getAllSortByRole();
 }

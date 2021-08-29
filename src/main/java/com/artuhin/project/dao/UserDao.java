@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -24,12 +25,12 @@ public class UserDao {
             return "#userExists";
         }
         String CREATE_SQL = "INSERT INTO users (role_name, login, password) VALUES (?, ?, ?)";
-        String CHECK_SQL = "SELECT FROM users WHERE login = ?";
+        String CHECK_SQL = "SELECT * FROM users WHERE login = ?";
         String name;
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connectionProxy.prepareStatement(CREATE_SQL);
-             PreparedStatement preparedStatement1 = connectionProxy.prepareStatement(CREATE_SQL)) {
-            preparedStatement.setString(1, user.getRole().toString());
+             PreparedStatement preparedStatement1 = connectionProxy.prepareStatement(CHECK_SQL)) {
+            preparedStatement.setString(1, user.getRole().toString().toLowerCase(Locale.ROOT));
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.executeUpdate();
@@ -50,6 +51,20 @@ public class UserDao {
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getRole().toString());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error(SQL_EXCEPTION, e);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateRole(String login, Role role) {
+        String UPDATE_SQL = "UPDATE users SET role_name = ? WHERE login =?";
+        try (ConnectionProxy connection = TransactionManager.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
+            preparedStatement.setString(1, role.toString().toLowerCase(Locale.ROOT));
+            preparedStatement.setString(2, login);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
@@ -95,19 +110,6 @@ public class UserDao {
         return true;
     }
 
-    public List<User> getAllUsersByRole(Role role) {
-        List<User> resultList = new ArrayList<>();
-        String GET_ALL_SQL = "SELECT * FROM users WHERE role_name = ? ORDER BY login";
-        try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
-             PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_ALL_SQL)) {
-            preparedStatement.setString(1, role.toString());
-            resultList = WithoutReflectionParser.getInstance().usersParser(preparedStatement.executeQuery());
-        } catch (SQLException e) {
-            LOGGER.error(SQL_EXCEPTION, e);
-        }
-        return resultList;
-    }
-
     public List<User> getAllMastersSortByRating() {
         List<User> resultList = new ArrayList<>();
         String GET_MASTERS_BY_RATING_SQL = "SELECT * FROM users WHERE role_name = ? ORDER BY rating DESC";
@@ -130,11 +132,11 @@ public class UserDao {
              PreparedStatement preparedStatement1 = connectionProxy.prepareStatement(GET_PROCEDURES_SQL)) {
             List<Procedure> procedureList = WithoutReflectionParser.getInstance().procedureParser(preparedStatement1.executeQuery());
             preparedStatement.setString(1, Role.MASTER.toString().toLowerCase(Locale.ROOT));
-            List <User> userList = WithoutReflectionParser.getInstance().usersParser(preparedStatement.executeQuery());
-            for (Procedure p: procedureList) {
+            List<User> userList = WithoutReflectionParser.getInstance().usersParser(preparedStatement.executeQuery());
+            for (Procedure p : procedureList) {
                 List<User> users = new ArrayList<>();
-                for (User user: userList) {
-                    if (user.getSpecialization().getName().equals(p.getName())){
+                for (User user : userList) {
+                    if (user.getSpecialization().getName().equals(p.getName())) {
                         users.add(user);
                     }
                 }
@@ -146,13 +148,13 @@ public class UserDao {
         return resultList;
     }
 
-    public List<User> getMastersByRating(int rating) {
+    public List<User> getMastersByRating(double rating) {
         List<User> resultList = new ArrayList<>();
         String GET_MASTERS_BY_RATING_SQL = "SELECT * FROM users WHERE role_name = ? AND rating = ? ORDER BY login";
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_MASTERS_BY_RATING_SQL)) {
             preparedStatement.setString(1, Role.MASTER.toString());
-            preparedStatement.setInt(2, rating);
+            preparedStatement.setDouble(2, rating);
             resultList = WithoutReflectionParser.getInstance().usersParser(preparedStatement.executeQuery());
         } catch (SQLException e) {
             LOGGER.error(SQL_EXCEPTION, e);
@@ -202,5 +204,68 @@ public class UserDao {
             e.printStackTrace();
         }
         return user;
+    }
+
+    public boolean updateRating(String login, int recall) {
+        User user = getByLogin(login);
+        double rate = user.getRating();
+        int count = user.getRecallCount();
+        double newRate;
+        if (rate == 0 || count == 0) {
+            newRate = recall;
+            count = 1;
+        } else {
+            newRate = (rate * count + recall) / (++count);
+        }
+        String UPDATE_SQL = "UPDATE users SET rating = ?, recall_count = ? WHERE login = ?";
+        try (ConnectionProxy connection = TransactionManager.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
+            preparedStatement.setDouble(1, newRate);
+            preparedStatement.setInt(2, count);
+            preparedStatement.setString(3, user.getLogin());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error(SQL_EXCEPTION, e);
+            return false;
+        }
+        return true;
+    }
+
+    public List<User> getAllByRole(String role) {
+        List<User> users = new ArrayList<>();
+        try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
+             PreparedStatement preparedStatement = connectionProxy
+                     .prepareStatement("SELECT * FROM users WHERE role_name = ?")) {
+            preparedStatement.setString(1, role.toLowerCase(Locale.ROOT));
+            users = WithoutReflectionParser.getInstance().usersParser(preparedStatement.executeQuery());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public List<List<User>> getAllUserSortByRole() {
+        List<List<User>> resultList = new ArrayList<>();
+        String GET_ROLES_SQL = "SELECT * FROM role";
+        try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
+             PreparedStatement preparedStatement = connectionProxy.prepareStatement(GET_ROLES_SQL)) {
+            List<String> roleList = new ArrayList<>();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            try {
+                while (resultSet.next()) {
+                    String roleName = resultSet.getString("name");
+                    roleList.add(roleName);
+                }
+            } catch (SQLException e) {
+                LOGGER.error("SQL exception from parser", e);
+            }
+            for (String s : roleList) {
+                List<User> users = getAllByRole(s);
+                resultList.add(users);
+            }
+        } catch (SQLException e) {
+            LOGGER.error(SQL_EXCEPTION, e);
+        }
+        return resultList;
     }
 }

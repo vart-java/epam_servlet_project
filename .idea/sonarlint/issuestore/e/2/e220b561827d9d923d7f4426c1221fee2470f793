@@ -1,0 +1,23 @@
+
+r	java:S116"XRename this field "SQL_EXCEPTION" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥ÁÂÌýÿÿÿÿ
+l
+java:S3008"QRename this field "LOGGER" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢µÞâøÿÿÿÿ
+<
+java:S1170"!Make this final field static too.(¥ÁÂÌýÿÿÿÿ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(ªÓ¼áþÿÿÿÿ
+J
+java:S1481"/Remove this unused "procedures" local variable.(–’¡ÿüÿÿÿÿ
+O
+java:S1128"4Remove this unused import 'java.time.LocalDateTime'.(æÃ§ƒüÿÿÿÿ
+
+java:S1192"rDefine a constant instead of duplicating this literal "SELECT * FROM appointments WHERE master_login = ?" 3 times.(ªáÌèþÿÿÿÿ
+k	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”î®¹ÿÿÿÿÿ
+k	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ªáÌèþÿÿÿÿ
+k	java:S1176"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ë‰‹æûÿÿÿÿ
+f	java:S117G"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(µèß²
+f	java:S117U"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ð•©¬
+e	java:S117b"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(èµ§U
+k	java:S117o"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·ÃÆÿøÿÿÿÿ
+e	java:S117z"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í€üh
+f	java:S117ˆ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ã¸Á:
+f	java:S117–"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ã¸Á:

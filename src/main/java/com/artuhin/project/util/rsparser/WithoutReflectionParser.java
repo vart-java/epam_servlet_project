@@ -32,9 +32,8 @@ public class WithoutReflectionParser {
                 user.setLogin(resultSet.getString("login"));
                 user.setPassword(resultSet.getString("password"));
                 user.setRole(Role.valueOf(resultSet.getString("role_name").toUpperCase(Locale.ROOT)));
-                if (resultSet.getInt("rating") != 0) {
-                    user.setRating(resultSet.getInt("rating"));
-                }
+                user.setRating(resultSet.getDouble("rating"));
+                user.setRecallCount(resultSet.getInt("recall_count"));
                 if (resultSet.getString("specialization") != null) {
                     user.setSpecialization(new Procedure(resultSet.getString("specialization")));
                 }
@@ -57,6 +56,9 @@ public class WithoutReflectionParser {
                 appointment.setClientLogin(resultSet.getString("client_login"));
                 appointment.setStartTime(resultSet.getTimestamp("start_time"));
                 appointment.setConfirmed(resultSet.getBoolean("is_confirmed"));
+                appointment.setPaidUp(resultSet.getBoolean("is_paid_up"));
+                appointment.setFinished(resultSet.getBoolean("is_finished"));
+                appointment.setRated(resultSet.getBoolean("is_rated"));
                 appointmentsList.add(appointment);
             }
         } catch (SQLException e) {

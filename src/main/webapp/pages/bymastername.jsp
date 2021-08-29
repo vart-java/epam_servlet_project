@@ -23,12 +23,17 @@
                         <a class="nav-link active" aria-current="page" href="/main?command=main">| Main</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/main?command=procedures">My procedures</a>
+                        ${user.role.name().equals('GUEST') ?
+                                '<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">My procedures</a>' :
+                                (user.role.name().equals('ADMINISTRATOR') ? '<a class="nav-link" href="/main?command=procedures">All procedures</a>' :
+                                        '<a class="nav-link" href="/main?command=procedures">My procedures</a>')}
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            Registration
+                        ${user.role.name().equals('ADMINISTRATOR') || user.role.name().equals('MASTER') ? '<a class="nav-link disabled" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-disabled="true">' :
+                                '<a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">'}
+                        ${user.role.name().equals('GUEST') ?
+                                'Procedures' :
+                                'Book'}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                             <li><a class="dropdown-item" href="/main?command=ratings">By master rating</a></li>
@@ -36,15 +41,17 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">By procedure</a></li>
+                            <li><a class="dropdown-item" href="/main?command=regByProcedure">By procedure</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/main?command=logOut">Log out</a>
+                        ${user.role.name().equals('GUEST') ?
+                                '<a class="nav-link" href="/main?command=logOut">Create an account</a>' :
+                                '<a class="nav-link" href="/main?command=logOut">Log out</a>'}
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Coming soon</a>
-                    </li>
+                    ${user.role.name().equals('ADMINISTRATOR') ?
+                            ' <li class="nav-item"> <a class="nav-link" href="/main?command=adminMenu">Admin menu</a></li>'
+                            : '' }
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -68,7 +75,7 @@
                 </select>
                 <input type="date" value=${requestScope.dateNow1}
                         min=${requestScope.dateNow1} max=${requestScope.dateNow7} name="dateAppointment">
-                <button type="submit" class="btn btn-primary" name="command" value="regToApp">submit</button>
+                <button type="submit" class="btn btn-primary" name="command" value="regToApp" >submit</button>
             </form>
         </div>
     </div>

@@ -23,12 +23,17 @@
                         <a class="nav-link active" aria-current="page" href="/main?command=main">| Main</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/main?command=procedures">My procedures</a>
+                        ${user.role.name().equals('GUEST') ?
+                                '<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">My procedures</a>' :
+                                (user.role.name().equals('ADMINISTRATOR') ? '<a class="nav-link" href="/main?command=procedures">All procedures</a>' :
+                                        '<a class="nav-link" href="/main?command=procedures">My procedures</a>')}
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            Registration
+                        ${user.role.name().equals('ADMINISTRATOR') || user.role.name().equals('MASTER') ? '<a class="nav-link disabled" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-disabled="true">' :
+                                '<a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">'}
+                        ${user.role.name().equals('GUEST') ?
+                                'Procedures' :
+                                'Book'}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                             <li><a class="dropdown-item" href="/main?command=ratings">By master rating</a></li>
@@ -36,15 +41,17 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">By procedure</a></li>
+                            <li><a class="dropdown-item" href="/main?command=regByProcedure">By procedure</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/main?command=logOut">Log out</a>
+                        ${user.role.name().equals('GUEST') ?
+                                '<a class="nav-link" href="/main?command=logOut">Create an account</a>' :
+                                '<a class="nav-link" href="/main?command=logOut">Log out</a>'}
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Coming soon</a>
-                    </li>
+                    ${user.role.name().equals('ADMINISTRATOR') ?
+                            ' <li class="nav-item"> <a class="nav-link" href="/main?command=adminMenu">Admin menu</a></li>'
+                            : '' }
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -55,7 +62,10 @@
     </nav>
 </header>
 
-<h1 class="text-center"> Registration on procedure <c:out value="${requestScope.master.specialization.name}"/> to the
+<h1 class="text-center"> ${user.role.name().equals('GUEST') ?
+        '' :
+        'Registration on'}
+     procedure <c:out value="${requestScope.master.specialization.name}"/> to the
     <span
             class="badge bg-primary"><c:out value="${requestScope.master.simpleName}"/></span></h1>
 <div class="container">
@@ -98,7 +108,7 @@
                                    min="11:00" max="18:01" name="newApp" value="11:00">
                         </div>
                         <div class="col-xl-3">
-                            <button type="submit" class="btn btn-info" name="command" value="regToApp">Submit</button>
+                            <button type="submit" class="btn btn-info" name="command" value="regToApp" <c:if test="${user.role.name().equals('GUEST')}">disabled</c:if>>Submit</button>
                         </div>
                         <input type="hidden" name="day" value=${requestScope.time}>
                         <input type="hidden" name="master" value=${requestScope.master.login}>

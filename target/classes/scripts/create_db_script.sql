@@ -23,7 +23,8 @@ CREATE TABLE public.users
     login character varying(32) NOT NULL,
     password character varying(64) NOT NULL,
     role_name character varying(32) NOT NULL,
-    rating integer,
+    rating double precision,
+    recall_count integer,
     specialization character varying(32),
     PRIMARY KEY (login)
 );
@@ -43,7 +44,10 @@ CREATE TABLE public.appointments
     client_login character varying(32) NOT NULL,
     start_time timestamp without time zone NOT NULL,
     procedure_duration bigint,
-    is_confirmed boolean,
+    is_confirmed boolean NOT NULL,
+    is_paid_up boolean NOT NULL,
+    is_finished boolean NOT NULL,
+    is_rated boolean NOT NULL,
     PRIMARY KEY (id)
 );
 

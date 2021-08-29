@@ -2,7 +2,10 @@ package com.artuhin.project.services;
 
 import com.artuhin.project.model.Appointment;
 import com.artuhin.project.factory.DaoFactory;
+import com.artuhin.project.model.EMailData;
 
+import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.List;
 
 public class AppointmentsServiceImpl implements AppointmentsService {
@@ -27,12 +30,12 @@ public class AppointmentsServiceImpl implements AppointmentsService {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(long id) {
         return DaoFactory.getInstance().getAppointmentsDao().delete(id);
     }
 
     @Override
-    public Appointment getById(int id) {
+    public Appointment getById(long id) {
         return DaoFactory.getInstance().getAppointmentsDao().getByID(id);
     }
 
@@ -59,6 +62,36 @@ public class AppointmentsServiceImpl implements AppointmentsService {
     @Override
     public List<Appointment> getByMasterLoginByDay(String login, int day) {
         return DaoFactory.getInstance().getAppointmentsDao().getAppointmentByMasterLoginByDay(login, day);
+    }
+
+    @Override
+    public boolean updateConfirmToTrue(long id) {
+        return DaoFactory.getInstance().getAppointmentsDao().updateConfirmToTrue(id);
+    }
+
+    @Override
+    public boolean updatePaidUpToTrue(long id) {
+        return DaoFactory.getInstance().getAppointmentsDao().updatePaidUpToTrue(id);
+    }
+
+    @Override
+    public boolean updateStartTime(long id, LocalTime localTime) {
+        return DaoFactory.getInstance().getAppointmentsDao().updateStartTime(id, localTime);
+    }
+
+    @Override
+    public boolean updateFinishedToTrue(long id) {
+        return DaoFactory.getInstance().getAppointmentsDao().updateFinishedToTrue(id);
+    }
+
+    @Override
+    public List<EMailData> getDataForNotifications(Timestamp timestamp) {
+        return DaoFactory.getInstance().getAppointmentsDao().getDataForNotifications(timestamp);
+    }
+
+    @Override
+    public boolean updateRatedToTrue(long id) {
+        return DaoFactory.getInstance().getAppointmentsDao().updateRatedToTrue(id);
     }
 
 

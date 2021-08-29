@@ -1,6 +1,10 @@
 package com.artuhin.project.services;
 
 import com.artuhin.project.model.Appointment;
+import com.artuhin.project.model.EMailData;
+
+import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.List;
 
 public interface AppointmentsService extends Service {
@@ -9,9 +13,9 @@ public interface AppointmentsService extends Service {
 
     boolean update(Appointment appointment);
 
-    boolean delete(int id);
+    boolean delete(long id);
 
-    Appointment getById(int id);
+    Appointment getById(long id);
 
     boolean clearAll();
 
@@ -23,5 +27,15 @@ public interface AppointmentsService extends Service {
 
     List<Appointment> getByMasterLoginByDay(String login, int day);
 
+    boolean updateConfirmToTrue(long id);
 
+    boolean updatePaidUpToTrue(long id);
+
+    boolean updateStartTime(long id, LocalTime localTime);
+
+    boolean updateFinishedToTrue(long id);
+
+    List<EMailData> getDataForNotifications(Timestamp timestamp);
+
+    boolean updateRatedToTrue(long id);
 }

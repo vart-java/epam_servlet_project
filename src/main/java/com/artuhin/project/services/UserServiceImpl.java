@@ -1,5 +1,6 @@
 package com.artuhin.project.services;
 
+import com.artuhin.project.model.Role;
 import com.artuhin.project.model.User;
 import com.artuhin.project.factory.DaoFactory;
 
@@ -53,6 +54,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkUser(String login, String password) {
         return DaoFactory.getInstance().getUserDao().chekingIfUserExisting(login, password);
+    }
+
+    @Override
+    public boolean updateRating(String login, int recall) {
+        return DaoFactory.getInstance().getUserDao().updateRating(login, recall);
+    }
+
+    @Override
+    public boolean updateRole(String login, Role role) {
+        return DaoFactory.getInstance().getUserDao().updateRole(login, role);
+    }
+
+    @Override
+    public List<List<User>> getAllSortByRole() {
+        return DaoFactory.getInstance().getUserDao().getAllUserSortByRole();
     }
 
     @Override

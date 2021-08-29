@@ -1,5 +1,9 @@
 package com.artuhin.project.controller;
 
+import com.artuhin.project.factory.ServiceFactory;
+import com.artuhin.project.model.Appointment;
+import com.artuhin.project.notification.trigger.Trigger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +16,16 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Trigger.start();
         HttpSession session = req.getSession();
         boolean isLogged = session.getAttribute("user") != null;
         if ("registration".equals(req.getParameter("command"))&&!isLogged){
             req.getRequestDispatcher("pages/registration.jsp").forward(req,resp);
+        }
+        if ("getRecall".equals(req.getParameter("command"))&&!isLogged){
+            Appointment appointment = ServiceFactory.getInstance().getAppointmentsService().getById(Long.parseLong(req.getParameter("id")));
+            req.setAttribute("appointment", appointment);
+            req.getRequestDispatcher("pages/recall.jsp").forward(req,resp);
         }
         if (!isLogged) {
             req.getRequestDispatcher("pages/authorization.jsp").forward(req, resp);

@@ -11,6 +11,9 @@ public class Appointment {
     private String clientLogin;
     private Timestamp startTime;
     private boolean isConfirmed;
+    private boolean isPaidUp;
+    private boolean isFinished;
+    private boolean isRated;
 
     public long getId() {
         return id;
@@ -60,21 +63,51 @@ public class Appointment {
         isConfirmed = confirmed;
     }
 
-    public Appointment(long id, Procedure procedure, String masterLogin, String clientLogin, Timestamp startTime, Boolean isConfirmed) {
+    public boolean isPaidUp() {
+        return isPaidUp;
+    }
+
+    public void setPaidUp(boolean paidUp) {
+        isPaidUp = paidUp;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
+    }
+
+    public boolean isRated() {
+        return isRated;
+    }
+
+    public void setRated(boolean rated) {
+        isRated = rated;
+    }
+
+    public Appointment(long id, Procedure procedure, String masterLogin, String clientLogin, Timestamp startTime, Boolean isConfirmed, Boolean isPaidUp, Boolean isFinished, Boolean isRated) {
         this.id = id;
         this.procedure = procedure;
         this.masterLogin = masterLogin;
         this.clientLogin = clientLogin;
         this.startTime = startTime;
         this.isConfirmed = isConfirmed;
+        this.isPaidUp = isPaidUp;
+        this.isFinished = isFinished;
+        this.isRated = isRated;
     }
 
-    public Appointment(Procedure procedure, String masterLogin, String clientLogin, Timestamp startTime, Boolean isConfirmed) {
+    public Appointment(Procedure procedure, String masterLogin, String clientLogin, Timestamp startTime, Boolean isConfirmed, Boolean isPaidUp, Boolean isFinished, Boolean isRated) {
         this.procedure = procedure;
         this.masterLogin = masterLogin;
         this.clientLogin = clientLogin;
         this.startTime = startTime;
         this.isConfirmed = isConfirmed;
+        this.isPaidUp = isPaidUp;
+        this.isFinished = isFinished;
+        this.isRated = isRated;
     }
 
     public Appointment() {
@@ -90,13 +123,16 @@ public class Appointment {
                 clientLogin.equals(o1.clientLogin) &&
                 masterLogin.equals(o1.masterLogin) &&
                 Objects.equals(startTime, o1.startTime) &&
-                isConfirmed == o1.isConfirmed;
+                isConfirmed == o1.isConfirmed &&
+                isPaidUp == o1.isPaidUp &&
+                isRated == o1.isRated &&
+                isFinished == o1.isFinished;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, procedure, masterLogin, clientLogin, startTime, isConfirmed);
+        return Objects.hash(id, procedure, masterLogin, clientLogin, startTime, isConfirmed, isPaidUp, isFinished, isRated);
     }
 
     @Override
@@ -109,6 +145,9 @@ public class Appointment {
                 ", clientLogin='" + clientLogin + '\'' +
                 ", startTime=" + startTime +
                 ", isConfirmed" + isConfirmed +
+                ", isPaidUp" + isPaidUp +
+                ", isFinished" + isFinished +
+                ", isRated" + isRated +
                 '}';
     }
 }

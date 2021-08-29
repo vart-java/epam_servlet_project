@@ -17,6 +17,7 @@ public class Ratings implements ICommand {
         LocalDate localDate = LocalDate.now();
         req.setAttribute("dateNow1", localDate.plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         req.setAttribute("dateNow7", localDate.plusDays(7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
         return "pages/ratings.jsp";
     }
 }

@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.87.0">
-    <title>Signin Template · Bootstrap v5.1</title>
+    <title>Signin Beauty Saloon</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.css" rel="stylesheet">
@@ -35,28 +35,25 @@
 <main class="form-signin">
     <form action="/main" method="post">
         <img class="mb-4" src="/images/authorization_logo-removebg-preview.png" alt="" width="220" height="220">
-        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        <h1 class="h3 mb-3 fw-normal">Please sign in or create an account</h1>
 
         <div class="form-floating">
             <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="username" minlength="6" maxlength="24">
             <label for="floatingInput">Email address</label>
         </div>
         <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name ="password" pattern="[a-zA-Z0-9]+" minlength="5" maxlength="8">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name ="password" pattern="[a-zA-Zа-яА-Я0-9]+" minlength="5" maxlength="8">
             <label for="floatingPassword">Password</label>
-        </div>
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
         </div>
 
         <button class="w-100 btn btn-lg btn-primary" type="submit" name="command" value="auth">
             Sign in</button>
-        <p style="color: red;" class="text-center">${requestScope.message}</p>
+        <p style="color: red;" class="text-center"></p>
         <button class="w-100 btn btn-lg btn-primary" type="submit" name="command" value ="registration">
             Create an Account</button>
+        <p style="color: red;" class="text-center">${requestScope.message}</p>
+        <button class="w-100 btn btn-lg btn-secondary" name="command" value="authAsGuest">
+            As a guest</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
     </form>
 </main>

@@ -20,6 +20,10 @@ public class CommandResolver {
         commands.put("main", new Main());
         commands.put("ratings",new Ratings());
         commands.put("regByMasterName",new RegisterByMasterName());
+        commands.put("regByProcedure",new RegisterByProcedure());
+        commands.put("authAsGuest",new AuthorizationAsGuest());
+        commands.put("getRecall",new RecallHandler());
+        commands.put("adminMenu",new AdminMenu());
     }
 
     public static CommandResolver getInstance() {

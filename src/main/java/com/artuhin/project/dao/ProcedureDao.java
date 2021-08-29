@@ -16,7 +16,7 @@ public class ProcedureDao {
 
     public List<Procedure> getAll() {
         List<Procedure> procedures = new ArrayList<>();
-        String GET_SQL = "SELECT * FROM procedures)";
+        String GET_SQL = "SELECT * FROM procedures";
         try (ConnectionProxy connectionProxy = TransactionManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connectionProxy
                      .prepareStatement(GET_SQL)) {

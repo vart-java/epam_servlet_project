@@ -23,12 +23,17 @@
                         <a class="nav-link active" aria-current="page" href="/main?command=main">| Main</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/main?command=procedures">My procedures</a>
+                        ${user.role.name().equals('GUEST') ?
+                                '<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">My procedures</a>' :
+                                (user.role.name().equals('ADMINISTRATOR') ? '<a class="nav-link" href="/main?command=procedures">All procedures</a>' :
+                                 '<a class="nav-link" href="/main?command=procedures">My procedures</a>')}
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            Registration
+                        ${user.role.name().equals('ADMINISTRATOR') || user.role.name().equals('MASTER') ? '<a class="nav-link disabled" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-disabled="true">' :
+                                '<a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">'}
+                        ${user.role.name().equals('GUEST') ?
+                                'Procedures' :
+                                'Book'}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                             <li><a class="dropdown-item" href="/main?command=ratings">By master rating</a></li>
@@ -36,15 +41,17 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">By procedure</a></li>
+                            <li><a class="dropdown-item" href="/main?command=regByProcedure">By procedure</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/main?command=logOut">Log out</a>
+                        ${user.role.name().equals('GUEST') ?
+                                '<a class="nav-link" href="/main?command=logOut">Create an account</a>' :
+                                '<a class="nav-link" href="/main?command=logOut">Log out</a>'}
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Coming soon</a>
-                    </li>
+                    ${user.role.name().equals('ADMINISTRATOR') ?
+                            ' <li class="nav-item"> <a class="nav-link" href="/main?command=adminMenu">Admin menu</a></li>'
+                            : '' }
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -65,15 +72,23 @@
         <th scope="col">Duration</th>
         <th scope="col">Master</th>
         <th scope="col">Confirmed</th>
+        <th scope="col">PaidUp</th>
+        <th scope="col">Finished</th>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="appointment" items="${requestScope.appointments}">
-        <c:if test="${appointment.confirmed == true}">
+        <c:if test="${appointment.confirmed && appointment.paidUp == true}">
             <tr class="table-success">
+        </c:if>
+        <c:if test="${appointment.confirmed == true && appointment.paidUp == false}">
+            <tr class="table-danger">
         </c:if>
         <c:if test="${appointment.confirmed == false}">
             <tr class="table-primary">
+        </c:if>
+        <c:if test="${(appointment.startTime.before(requestScope.timestamp)) == true}">
+            <tr class="table-info">
         </c:if>
             <td><c:out value="${appointment.id}"/></td>
             <td><c:out value="${appointment.procedure.name}"/></td>
@@ -81,6 +96,8 @@
             <td><c:out value="${appointment.procedure.duration}"/></td>
             <td><c:out value="${appointment.masterLogin}"/></td>
             <td><c:out value="${appointment.confirmed}"/></td>
+            <td><c:out value="${appointment.paidUp}"/></td>
+            <td><c:out value="${appointment.finished}"/></td>
         </tr>
     </c:forEach>
     </tbody>
