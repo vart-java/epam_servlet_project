@@ -31,21 +31,20 @@
     <link href="/css/signin.css" rel="stylesheet">
 </head>
 <body class="text-center">
-
 <main class="form-signin">
     <form action="/main" method="post">
         <img class="mb-4" src="/images/authorization_logo-removebg-preview.png" alt="" width="220" height="220">
-        <h1 class="h3 mb-3 fw-normal">Please sign in or create an account</h1>
+        <h1 class="h3 mb-3 fw-normal">Please sign in or create an account
+        </h1>
 
         <div class="form-floating">
             <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="username" minlength="6" maxlength="24">
             <label for="floatingInput">Email address</label>
         </div>
         <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name ="password" pattern="[a-zA-Zа-яА-Я0-9]+" minlength="5" maxlength="8">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name ="password" pattern="[a-zA-Zа-яА-ЯіІїЇєЄ0-9]+" minlength="5" maxlength="8">
             <label for="floatingPassword">Password</label>
         </div>
-
         <button class="w-100 btn btn-lg btn-primary" type="submit" name="command" value="auth">
             Sign in</button>
         <p style="color: red;" class="text-center"></p>
@@ -54,11 +53,17 @@
         <p style="color: red;" class="text-center">${requestScope.message}</p>
         <button class="w-100 btn btn-lg btn-secondary" name="command" value="authAsGuest">
             As a guest</button>
-        <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
     </form>
+    <form class="text-center" action="/main" method="post">
+        <label><input type="radio" name="language" value="en"  ${loc.equals('en') ?
+                'Checked' :
+                ''}>EN</label>
+        <label><input type="radio" name="language" value="ukr"  ${loc.equals('ukr') ?
+                'Checked' :
+                ''}>UKR</label>
+        <button type="submit" class="btn btn-sm btn-secondary" name="command" value="locale">✓</button>
+    </form>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
 </main>
-
-
-
 </body>
 </html>

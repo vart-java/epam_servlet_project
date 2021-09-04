@@ -20,7 +20,7 @@ public class DbConnector {
         initDataSource();
     }
 
-    public static DbConnector getInstance() {
+    public static synchronized DbConnector getInstance() {
         return instance;
     }
 

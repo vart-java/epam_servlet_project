@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class CommandResolver {
 
     private static final HashMap<String, ICommand> commands = new HashMap();
-    private static CommandResolver instance = new CommandResolver();
+    private static CommandResolver instance;
 
     private CommandResolver() {
         commands.put("registration", new Registration());
@@ -18,20 +18,32 @@ public class CommandResolver {
         commands.put("regToApp", new RegisterToAppointment());
         commands.put("logOut", new LogOut());
         commands.put("main", new Main());
-        commands.put("ratings",new Ratings());
-        commands.put("regByMasterName",new RegisterByMasterName());
-        commands.put("regByProcedure",new RegisterByProcedure());
-        commands.put("authAsGuest",new AuthorizationAsGuest());
-        commands.put("getRecall",new RecallHandler());
-        commands.put("adminMenu",new AdminMenu());
+        commands.put("ratings", new Ratings());
+        commands.put("regByMasterName", new RegisterByMasterName());
+        commands.put("regByProcedure", new RegisterByProcedure());
+        commands.put("authAsGuest", new AuthorizationAsGuest());
+        commands.put("getRecall", new RecallHandler());
+        commands.put("adminMenu", new AdminMenu());
+        commands.put("locale", new Locale());
     }
 
-    public static CommandResolver getInstance() {
+    public static synchronized CommandResolver getInstance() {
+        if (instance == null) {
+            instance = new CommandResolver();
+        }
         return instance;
     }
 
     public ICommand getCommand(HttpServletRequest request) {
         ICommand command = commands.get(request.getParameter("command"));
+        if (command == null) {
+            command = commands.get("wrong");
+        }
+        return command;
+    }
+
+    public ICommand getCommand(String commandA) {
+        ICommand command = commands.get(commandA);
         if (command == null) {
             command = commands.get("wrong");
         }

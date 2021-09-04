@@ -39,7 +39,7 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
-        simpleName = login.substring(0, 1).toUpperCase(Locale.ROOT)+login.substring(1, login.indexOf('@'));
+        simpleName = login.substring(0, 1).toUpperCase(Locale.ROOT) + login.substring(1, login.indexOf('@'));
     }
 
     public String getPassword() {
@@ -88,6 +88,15 @@ public class User {
 
     public void setRecallCount(int recall_count) {
         this.recallCount = recall_count;
+    }
+
+    public void updateRating(int recall) {
+        if (rating == 0 || recallCount == 0) {
+            rating = recall;
+            recallCount = 1;
+        } else {
+            rating = (rating * recallCount + recall) / (++recallCount);
+        }
     }
 
     @Override

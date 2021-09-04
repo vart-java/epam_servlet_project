@@ -9,11 +9,14 @@ public class TransactionManager {
 
     private final DbConnector dataSource = DbConnector.getInstance();
     private static final ThreadLocal<ConnectionProxy> currentConnection = new ThreadLocal<>();
-    private static TransactionManager ourInstance = new TransactionManager();
+    private static TransactionManager instance;
     private static Logger LOGGER = LogManager.getLogger(DbConnector.class);
 
-    public static TransactionManager getInstance() {
-        return ourInstance;
+    public static synchronized TransactionManager getInstance() {
+        if (instance == null) {
+            instance = new TransactionManager();
+        }
+        return instance;
     }
 
     private TransactionManager() {
@@ -80,7 +83,6 @@ public class TransactionManager {
         } catch (SQLException e) {
             LOGGER.error("Can`t connect to DB", e);
         }
-
         return currentConnection.get();
     }
 }

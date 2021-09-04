@@ -9,18 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
 
 public class Authorization implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String login = req.getParameter("username");
         String password = req.getParameter("password");
-
         UserService userService = ServiceFactory.getInstance().getUserService();
-        boolean isValid = userService.checkUser(login, getCryptPassword(password));
-        if (isValid) {
-            User user = userService.getByLogin(login);
+        User user = userService.getByLogin(login);
+        if (user != null) {
             req.getSession().setAttribute("user", user);
+            req.getSession().setAttribute("loc", req.getParameter("language"));
             return "pages/main.jsp";
         }
         req.setAttribute("message", "invalid username or password");

@@ -55,7 +55,7 @@ public class MyProcedures implements ICommand {
                 long id = Long.parseLong(req.getParameter("id"));
                 LocalTime localTime = LocalTime.parse(req.getParameter("newApp"), DateTimeFormatter.ofPattern("H:mm"));
                 if(!appointmentsService.updateStartTime(id, localTime)){
-                    req.setAttribute("message", "Sorry, but you chose the wrong time. Please enter the correct time according to the recommendations on this page");
+                    req.setAttribute("message", "wrong_time");
                 }
             }
             req.setAttribute("appointments", appointmentsService.getAll());

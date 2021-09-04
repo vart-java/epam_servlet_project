@@ -34,10 +34,10 @@ public class RegisterToAppointment implements ICommand {
             List<Appointment> appointments = ServiceFactory.getInstance().getAppointmentsService().getByMasterLoginByDay(req.getParameter("master"), time);
             req.setAttribute("appointments", appointments);
             if (id == 0) {
-                req.setAttribute("message", "Sorry, but you chose the wrong time. Please enter the correct time according to the recommendations on this page");
+                req.setAttribute("message", "wrong_time");
                 return "pages/appointmentregistration.jsp";
             }
-            req.setAttribute("message", "Congratulations, you have successfully made an appointment (id: " + id + ") with the master. In the near future, the administrator will confirm the procedure");
+            req.setAttribute("message", "successful_reg");
             return "pages/appointmentregistration.jsp";
         }
         LocalDate localDate = LocalDate.parse(req.getParameter("dateAppointment"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
