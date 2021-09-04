@@ -1,9 +1,10 @@
 package com.artuhin.project.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-public class Appointment {
+public class Appointment implements Serializable {
 
     private long id;
     private Procedure procedure;
@@ -85,32 +86,6 @@ public class Appointment {
 
     public void setRated(boolean rated) {
         isRated = rated;
-    }
-
-    public Appointment(long id, Procedure procedure, String masterLogin, String clientLogin, Timestamp startTime, Boolean isConfirmed, Boolean isPaidUp, Boolean isFinished, Boolean isRated) {
-        this.id = id;
-        this.procedure = procedure;
-        this.masterLogin = masterLogin;
-        this.clientLogin = clientLogin;
-        this.startTime = startTime;
-        this.isConfirmed = isConfirmed;
-        this.isPaidUp = isPaidUp;
-        this.isFinished = isFinished;
-        this.isRated = isRated;
-    }
-
-    public Appointment(Procedure procedure, String masterLogin, String clientLogin, Timestamp startTime, Boolean isConfirmed, Boolean isPaidUp, Boolean isFinished, Boolean isRated) {
-        this.procedure = procedure;
-        this.masterLogin = masterLogin;
-        this.clientLogin = clientLogin;
-        this.startTime = startTime;
-        this.isConfirmed = isConfirmed;
-        this.isPaidUp = isPaidUp;
-        this.isFinished = isFinished;
-        this.isRated = isRated;
-    }
-
-    public Appointment() {
     }
 
     @Override

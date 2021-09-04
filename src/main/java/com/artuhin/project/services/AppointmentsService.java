@@ -11,13 +11,9 @@ public interface AppointmentsService extends Service {
 
     int create(Appointment appointment);
 
-    boolean update(Appointment appointment);
-
     boolean delete(long id);
 
     Appointment getById(long id);
-
-    boolean clearAll();
 
     List<Appointment> getAll();
 

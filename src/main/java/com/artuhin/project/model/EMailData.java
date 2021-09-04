@@ -10,15 +10,12 @@ public class EMailData {
     private Timestamp timestamp;
     private long appointmentId;
 
-    public EMailData() {
-    }
-
     public String getUserLogin() {
         return userLogin;
     }
 
     public String getSimpleName(String name) {
-        return name.substring(0,1).toUpperCase(Locale.ROOT)+name.substring(1, name.indexOf('@'));
+        return name.substring(0, 1).toUpperCase(Locale.ROOT) + name.substring(1, name.indexOf('@'));
     }
 
     public void setUserLogin(String userLogin) {

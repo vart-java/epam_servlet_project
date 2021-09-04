@@ -1,13 +1,13 @@
 package com.artuhin.project.factory;
 
-import com.artuhin.project.dao.AppointmentsDao;
+import com.artuhin.project.dao.AppointmentDao;
 import com.artuhin.project.dao.ProcedureDao;
-import com.artuhin.project.dao.UsersDao;
+import com.artuhin.project.dao.UserDao;
 
 public class DaoFactory {
-    private UsersDao USERS_DAO = UsersDao.getInstance();
-    private static final AppointmentsDao APPOINTMENTS_DAO = new AppointmentsDao();
-    private static final ProcedureDao PROCEDURE_DAO = new ProcedureDao();
+    private UserDao userDao = UserDao.getInstance();
+    private AppointmentDao appointmentDao = AppointmentDao.getInstance();
+    private ProcedureDao procedureDao = ProcedureDao.getInstance();
 
     private static DaoFactory instance;
 
@@ -21,16 +21,15 @@ public class DaoFactory {
     private DaoFactory() {
     }
 
-
-    public UsersDao getUsersDao() {
-        return USERS_DAO;
+    public UserDao getUsersDao() {
+        return userDao;
     }
 
-    public AppointmentsDao getAppointmentsDao() {
-        return APPOINTMENTS_DAO;
+    public AppointmentDao getAppointmentDao() {
+        return appointmentDao;
     }
 
     public ProcedureDao getProcedureDao() {
-        return PROCEDURE_DAO;
+        return procedureDao;
     }
 }

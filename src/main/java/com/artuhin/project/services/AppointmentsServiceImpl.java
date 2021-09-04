@@ -3,10 +3,14 @@ package com.artuhin.project.services;
 import com.artuhin.project.model.Appointment;
 import com.artuhin.project.factory.DaoFactory;
 import com.artuhin.project.model.EMailData;
+import com.artuhin.project.util.annotations.Transactional;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AppointmentsServiceImpl implements AppointmentsService {
     private static AppointmentsServiceImpl ourInstance = new AppointmentsServiceImpl();
@@ -19,80 +23,98 @@ public class AppointmentsServiceImpl implements AppointmentsService {
     }
 
 
+    @Transactional
     @Override
     public int create(Appointment appointment) {
-        return DaoFactory.getInstance().getAppointmentsDao().create(appointment);
+        return DaoFactory.getInstance().getAppointmentDao().create(appointment);
     }
 
-    @Override
-    public boolean update(Appointment appointment) {
-        return DaoFactory.getInstance().getAppointmentsDao().update(appointment);
-    }
-
+    @Transactional
     @Override
     public boolean delete(long id) {
-        return DaoFactory.getInstance().getAppointmentsDao().delete(id);
+        return DaoFactory.getInstance().getAppointmentDao().delete(id);
     }
 
     @Override
     public Appointment getById(long id) {
-        return DaoFactory.getInstance().getAppointmentsDao().getByID(id);
-    }
-
-    @Override
-    public boolean clearAll() {
-        return DaoFactory.getInstance().getAppointmentsDao().clearAll();
+        return DaoFactory.getInstance().getAppointmentDao().get(id);
     }
 
     @Override
     public List<Appointment> getAll() {
-        return DaoFactory.getInstance().getAppointmentsDao().getAll();
+        return DaoFactory.getInstance().getAppointmentDao().getAll();
     }
 
     @Override
     public List<Appointment> getByClientLogin(String login) {
-        return DaoFactory.getInstance().getAppointmentsDao().getAppointmentsByClientLogin(login);
+        return DaoFactory.getInstance().getAppointmentDao().getAll().stream().filter(a -> a.getClientLogin().equals(login)).collect(Collectors.toList());
     }
 
     @Override
     public List<Appointment> getByMasterLogin(String login) {
-        return DaoFactory.getInstance().getAppointmentsDao().getAppointmentByMasterLogin(login);
+        return DaoFactory.getInstance().getAppointmentDao().getAll().stream().filter(a -> a.getMasterLogin().equals(login)).collect(Collectors.toList());
     }
 
     @Override
     public List<Appointment> getByMasterLoginByDay(String login, int day) {
-        return DaoFactory.getInstance().getAppointmentsDao().getAppointmentByMasterLoginByDay(login, day);
+        return getByMasterLogin(login).stream().filter(a -> a.getStartTime().toLocalDateTime().getDayOfYear() == day).collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public boolean updateConfirmToTrue(long id) {
-        return DaoFactory.getInstance().getAppointmentsDao().updateConfirmToTrue(id);
+        Appointment appointment = getById(id);
+        appointment.setConfirmed(true);
+        return DaoFactory.getInstance().getAppointmentDao().update(appointment);
     }
 
+    @Transactional
     @Override
     public boolean updatePaidUpToTrue(long id) {
-        return DaoFactory.getInstance().getAppointmentsDao().updatePaidUpToTrue(id);
+        Appointment appointment = getById(id);
+        appointment.setPaidUp(true);
+        return DaoFactory.getInstance().getAppointmentDao().update(appointment);
     }
 
+    @Transactional
     @Override
     public boolean updateStartTime(long id, LocalTime localTime) {
-        return DaoFactory.getInstance().getAppointmentsDao().updateStartTime(id, localTime);
+        Appointment appointment = getById(id);
+        appointment.setStartTime(Timestamp.valueOf(LocalDateTime.of(appointment.getStartTime().toLocalDateTime().toLocalDate(), localTime)));
+        return DaoFactory.getInstance().getAppointmentDao().update(appointment);
     }
 
+    @Transactional
     @Override
     public boolean updateFinishedToTrue(long id) {
-        return DaoFactory.getInstance().getAppointmentsDao().updateFinishedToTrue(id);
+        Appointment appointment = getById(id);
+        appointment.setFinished(true);
+        return DaoFactory.getInstance().getAppointmentDao().update(appointment);
     }
 
     @Override
     public List<EMailData> getDataForNotifications(Timestamp timestamp) {
-        return DaoFactory.getInstance().getAppointmentsDao().getDataForNotifications(timestamp);
+        List<EMailData> eMailDatas = new ArrayList<>();
+        List<Appointment> appointments = getAll();
+        for (Appointment a : appointments) {
+            if (a.getStartTime().toLocalDateTime().getDayOfYear() + 1 == timestamp.toLocalDateTime().getDayOfYear() && a.isFinished() && !a.isRated()) {
+                EMailData eMailData = new EMailData();
+                eMailData.setAppointmentId(a.getId());
+                eMailData.setMasterLogin(a.getMasterLogin());
+                eMailData.setProcedureName(a.getProcedure().getName());
+                eMailData.setUserLogin(a.getClientLogin());
+                eMailData.setTimestamp(a.getStartTime());
+                eMailDatas.add(eMailData);
+            }
+        }
+        return eMailDatas;
     }
 
+    @Transactional
     @Override
     public boolean updateRatedToTrue(long id) {
-        return DaoFactory.getInstance().getAppointmentsDao().updateRatedToTrue(id);
+        Appointment appointment = getById(id);
+        appointment.setRated(true);
+        return DaoFactory.getInstance().getAppointmentDao().update(appointment);
     }
-
-
 }

@@ -50,7 +50,7 @@ public class ServiceFactory {
         return procedureService;
     }
 
-    private static boolean isTransactional(Class clazz) {
+    private static boolean isTransactional(Class<? extends Service> clazz) {
         return Arrays.stream(clazz.getMethods())
                 .anyMatch(m -> m.isAnnotationPresent(Transactional.class));
     }

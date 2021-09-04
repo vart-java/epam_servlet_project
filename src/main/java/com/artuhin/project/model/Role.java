@@ -1,6 +1,7 @@
 package com.artuhin.project.model;
 
-public enum Role {
+
+public enum Role{
     ADMINISTRATOR,
     MASTER,
     CLIENT,

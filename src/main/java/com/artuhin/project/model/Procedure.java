@@ -1,9 +1,11 @@
 package com.artuhin.project.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Procedure {
+public class Procedure implements Serializable {
 
+    private static final long serialVersionUID = -7162310034856761580L;
     private String name;
     private long duration;
 

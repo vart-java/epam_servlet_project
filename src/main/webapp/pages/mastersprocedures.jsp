@@ -1,7 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <title>My Procedures</title>
     <link href="/css/bootstrap.css" rel="stylesheet">
@@ -86,6 +87,7 @@
     <div class="col">
         <h4 class="text-center"><fmt:message key="today_schedule"/></h4>
         <table class="table table-striped table-bordered">
+            <caption></caption>
             <thead>
             <tr>
                 <th scope="col"><fmt:message key="procedure_uniqid"/></th>
@@ -132,6 +134,7 @@
     <div class="col">
         <h4 class="text-center"><fmt:message key="all_procedures"/></h4>
         <table class="table table-striped table-bordered">
+            <caption></caption>
             <thead>
             <tr>
                 <th scope="col"><fmt:message key="procedure_uniqid"/></th>

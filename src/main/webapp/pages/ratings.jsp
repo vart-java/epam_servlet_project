@@ -1,7 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <title>Ratings</title>
     <link href="/css/bootstrap.css" rel="stylesheet">
@@ -85,6 +86,7 @@
         <c:forEach var="UserList" items="${requestScope.ratings}">
             <div class="col-lg-3">
                 <table class="table align-middle">
+                    <caption></caption>
                     <h4 class="text-center">
                         <fmt:message key="${UserList.get(0).specialization.name}"/>
                         </h4>

@@ -4,11 +4,11 @@ import com.artuhin.project.model.Procedure;
 import com.artuhin.project.model.Role;
 import com.artuhin.project.model.User;
 import com.artuhin.project.factory.DaoFactory;
+import com.artuhin.project.util.annotations.Transactional;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
     private UserServiceImpl() {
     }
 
+    @Transactional
     @Override
     public String createUser(User user) {
         return DaoFactory.getInstance().getUsersDao().create(user);
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
         return DaoFactory.getInstance().getUsersDao().getAll();
     }
 
+    @Transactional
     @Override
     public boolean delete(String login) {
         return DaoFactory.getInstance().getUsersDao().delete(login);
@@ -41,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllMastersSortByRating() {
-        return DaoFactory.getInstance().getUsersDao().getAll().stream().filter(m -> m.getRole().equals(Role.MASTER.toString().toLowerCase(Locale.ROOT))).sorted(Comparator.comparingDouble(User::getRating)).collect(Collectors.toList());
+        return DaoFactory.getInstance().getUsersDao().getAll().stream().filter(m -> m.getRole().equals(Role.MASTER)).sorted(Comparator.comparingDouble(User::getRating)).collect(Collectors.toList());
     }
 
     @Override
@@ -53,6 +55,7 @@ public class UserServiceImpl implements UserService {
         return sortMasters;
     }
 
+    @Transactional
     @Override
     public boolean updateRating(String login, int recall) {
         User user = DaoFactory.getInstance().getUsersDao().get(login);
@@ -60,6 +63,7 @@ public class UserServiceImpl implements UserService {
         return DaoFactory.getInstance().getUsersDao().update(user);
     }
 
+    @Transactional
     @Override
     public boolean updateRole(String login, Role role) {
         User user = DaoFactory.getInstance().getUsersDao().get(login);
@@ -77,6 +81,7 @@ public class UserServiceImpl implements UserService {
         return sortUsers;
     }
 
+    @Transactional
     @Override
     public boolean updateSpecialization(String login, String specialization) {
         User user = DaoFactory.getInstance().getUsersDao().get(login);

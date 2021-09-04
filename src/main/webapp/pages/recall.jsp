@@ -1,9 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <title>Review</title>
-    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/boostrap.css" rel="stylesheet">
     <link href="/css/recall.css" rel="stylesheet">
 </head>
 <body>

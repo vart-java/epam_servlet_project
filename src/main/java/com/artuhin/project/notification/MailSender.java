@@ -15,7 +15,7 @@ import java.util.Properties;
 public class MailSender {
 
     private static MailSender ourInstance = new MailSender();
-    private static Logger LOGGER = LogManager.getLogger(MailSender.class);
+    private static final Logger LOGGER = LogManager.getLogger(MailSender.class);
 
     public static MailSender getInstance() {
         return ourInstance;
@@ -24,19 +24,19 @@ public class MailSender {
     private MailSender() {
     }
 
-    public void sendMail(EMailData EMailData) {
+    public void sendMail(EMailData eMailData) {
         Properties properties = new Properties();
         try (InputStream is = getClass().getResourceAsStream("/properties/mail.properties")) {
             properties.load(is);
             Session mailSession = Session.getDefaultInstance(properties);
             MimeMessage message = new MimeMessage(mailSession);
             message.setFrom(properties.getProperty("mail.smtps.user"));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(EMailData.getUserLogin()));
-            message.setSubject("Feedback about the procedure " + EMailData.getProcedureName());
-            message.setText("Hello, " + EMailData.getSimpleName(EMailData.getUserLogin()) + "! You underwent the procedure " + EMailData.getProcedureName() +
-                    " in our salon on "+EMailData.getTimestamp().toLocalDateTime()+" by the master "+ EMailData.getSimpleName(EMailData.getMasterLogin())+
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(eMailData.getUserLogin()));
+            message.setSubject("Feedback about the procedure " + eMailData.getProcedureName());
+            message.setText("Hello, " + eMailData.getSimpleName(eMailData.getUserLogin()) + "! You underwent the procedure " + eMailData.getProcedureName() +
+                    " in our salon on "+eMailData.getTimestamp().toLocalDateTime()+" by the master "+ eMailData.getSimpleName(eMailData.getMasterLogin())+
                     ". Please rate our master for the performed procedure by clicking on the link below " + System.lineSeparator() +
-                    "http://localhost:8080/main?command=getRecall&id="+EMailData.getAppointmentId());
+                    "http://localhost:8080/main?command=getRecall&id="+eMailData.getAppointmentId());
             Transport transport = mailSession.getTransport();
             transport.connect("user.notification.beauty.saloon@gmail.com", "beautysaloon1");
             transport.sendMessage(message, message.getAllRecipients());

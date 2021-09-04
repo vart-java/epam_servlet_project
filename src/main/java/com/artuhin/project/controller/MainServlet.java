@@ -19,13 +19,13 @@ public class MainServlet extends HttpServlet {
         Trigger.start();
         HttpSession session = req.getSession();
         boolean isLogged = session.getAttribute("user") != null;
-        if ("registration".equals(req.getParameter("command"))&&!isLogged){
-            req.getRequestDispatcher("pages/registration.jsp").forward(req,resp);
+        if ("registration".equals(req.getParameter("command")) && !isLogged) {
+            req.getRequestDispatcher("pages/registration.jsp").forward(req, resp);
         }
-        if ("getRecall".equals(req.getParameter("command"))&&!isLogged){
+        if ("getRecall".equals(req.getParameter("command")) && !isLogged) {
             Appointment appointment = ServiceFactory.getInstance().getAppointmentsService().getById(Long.parseLong(req.getParameter("id")));
             req.setAttribute("appointment", appointment);
-            req.getRequestDispatcher("pages/recall.jsp").forward(req,resp);
+            req.getRequestDispatcher("pages/recall.jsp").forward(req, resp);
         }
         if (!isLogged) {
             req.getRequestDispatcher("pages/authorization.jsp").forward(req, resp);

@@ -2,12 +2,14 @@ package com.artuhin.project.model;
 
 import org.apache.commons.math3.util.Precision;
 
+import java.io.Serializable;
 import java.util.Locale;
 import java.util.Objects;
 
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = 4744644561264818811L;
     private String login;
-    private String password;
+    private transient String password;
     private Role role;
     private double rating;
     private int recallCount;
@@ -86,8 +88,8 @@ public class User {
         return recallCount;
     }
 
-    public void setRecallCount(int recall_count) {
-        this.recallCount = recall_count;
+    public void setRecallCount(int recallCount) {
+        this.recallCount = recallCount;
     }
 
     public void updateRating(int recall) {

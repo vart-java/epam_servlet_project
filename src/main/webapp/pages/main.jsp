@@ -1,7 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -116,7 +117,7 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="/images/main_hair_coloring.jpg" class="img-fluid">
+                <img src="/images/main_hair_coloring.jpg" class="img-fluid" alt="">
                 <div class="container">
                     <div class="carousel-caption text-start">
                         <h1><fmt:message key="hair_coloring"/></h1>
@@ -133,7 +134,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="/images/main_face_massage.jpg" class="img-fluid">
+                <img src="/images/main_face_massage.jpg" class="img-fluid" alt="">
                 <div class="container">
                     <div class="carousel-caption">
                         <h1><fmt:message key="face_massage"/></h1>
@@ -150,7 +151,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="/images/main_eyelash_extension.jpg" class="img-fluid">
+                <img src="/images/main_eyelash_extension.jpg" class="img-fluid" alt="">
                 <div class="container">
                     <div class="carousel-caption">
                         <h1><fmt:message key="eyelash_extension"/></h1>
@@ -167,7 +168,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="/images/main_nail_coloring.jpg" class="img-fluid">
+                <img src="/images/main_nail_coloring.jpg" class="img-fluid" alt="">
                 <div class="container">
                     <div class="carousel-caption text-end">
                         <h1><fmt:message key="nail_staining"/></h1>
@@ -204,7 +205,7 @@
         <!-- Three columns of text below the carousel -->
         <div class="row">
             <div class="col-lg-4">
-                <img src="/images/main_master_1.jpg" class="img-fluid">
+                <img src="/images/main_master_1.jpg" class="img-fluid" alt="">
                 <h2><fmt:message key="main_best_master"/></h2>
                 <p><fmt:message key="main_difficult_appoint"/></p>
                 <p><a class="btn btn-secondary" href=
@@ -217,7 +218,7 @@
                 ><fmt:message key="main_view_schedule"/> &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
             <div class="col-lg-4">
-                <img src="/images/main_master_2.jpg" class="img-fluid">
+                <img src="/images/main_master_2.jpg" class="img-fluid" alt="">
                 <h2><fmt:message key="main_best_master"/></h2>
                 <p><fmt:message key="main_difficult_appoint"/></p>
                 <p><a class="btn btn-secondary" href=
@@ -230,7 +231,7 @@
                 ><fmt:message key="main_view_schedule"/> &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
             <div class="col-lg-4">
-                <img src="/images/main_master_3.jpg" class="img-fluid">
+                <img src="/images/main_master_3.jpg" class="img-fluid" alt="">
                 <h2><fmt:message key="main_best_master"/></h2>
                 <p><fmt:message key="main_difficult_appoint"/></p>
                 <p><a class="btn btn-secondary" href=

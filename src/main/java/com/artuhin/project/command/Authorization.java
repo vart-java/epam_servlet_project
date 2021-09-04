@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Locale;
 
 public class Authorization implements ICommand {
     @Override
@@ -18,7 +17,7 @@ public class Authorization implements ICommand {
         String password = req.getParameter("password");
         UserService userService = ServiceFactory.getInstance().getUserService();
         User user = userService.getByLogin(login);
-        if (user != null) {
+        if (user != null && getCryptPassword(password).equals(user.getPassword())) {
             req.getSession().setAttribute("user", user);
             req.getSession().setAttribute("loc", req.getParameter("language"));
             return "pages/main.jsp";

@@ -3,8 +3,6 @@ package com.artuhin.project.command;
 import com.artuhin.project.factory.ServiceFactory;
 import com.artuhin.project.model.Role;
 import com.artuhin.project.model.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,8 +11,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Registration implements ICommand {
-
-    private static Logger LOGGER = LogManager.getLogger(Registration.class);
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
@@ -31,7 +27,7 @@ public class Registration implements ICommand {
         return "pages/authorization.jsp";
     }
 
-    private String getCryptPassword (String password){
+    private String getCryptPassword(String password) {
         byte[] bytes = new byte[32];
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
@@ -41,7 +37,7 @@ public class Registration implements ICommand {
             e.printStackTrace();
         }
         StringBuilder pasBuilder = new StringBuilder();
-        for (byte b: bytes){
+        for (byte b : bytes) {
             pasBuilder.append(String.format("%02X", b));
         }
         return pasBuilder.toString();

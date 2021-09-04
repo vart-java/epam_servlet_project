@@ -1,7 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <title>My Procedures</title>
     <link href="/css/bootstrap.css" rel="stylesheet">
@@ -92,6 +93,7 @@
         <c:forEach var="UserList" items="${requestScope.ratings}">
             <div class="col-lg-6">
                 <table class="table align-middle">
+                    <caption></caption>
                     <h4 class="text-center">
                         <c:if test="${UserList.isEmpty()}">
                         </c:if>

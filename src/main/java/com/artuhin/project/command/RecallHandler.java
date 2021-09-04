@@ -16,10 +16,8 @@ public class RecallHandler implements ICommand {
         }
         if (null != req.getParameter("recall_rating")) {
             req.setAttribute("appointment", appointment);
-            if (ServiceFactory.getInstance().getUserService().updateRating(appointment.getMasterLogin(), Integer.parseInt(req.getParameter("recall_rating")))) {
-                if (ServiceFactory.getInstance().getAppointmentsService().updateRatedToTrue(appointment.getId())) {
-                    return "pages/authorization.jsp";
-                }
+            if (ServiceFactory.getInstance().getUserService().updateRating(appointment.getMasterLogin(), Integer.parseInt(req.getParameter("recall_rating"))) && ServiceFactory.getInstance().getAppointmentsService().updateRatedToTrue(appointment.getId())) {
+                return "pages/authorization.jsp";
             }
         }
         return "pages/recall.jsp";

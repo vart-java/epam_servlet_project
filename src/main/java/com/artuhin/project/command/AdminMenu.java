@@ -8,6 +8,7 @@ import com.artuhin.project.model.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,21 +20,17 @@ public class AdminMenu implements ICommand {
         if (!user.getRole().equals(Role.ADMINISTRATOR)) {
             return "pages/authorization.jsp";
         }
-        if (null != req.getParameter("role")) {
-            if (!ServiceFactory.getInstance().getUserService().updateRole(req.getParameter("login"), Role.valueOf(req.getParameter("role").toUpperCase(Locale.ROOT)))) {
-                req.setAttribute("message", "sorry, when update role something went wrong");
-            }
+        if (null != req.getParameter("role") && !ServiceFactory.getInstance().getUserService().updateRole(req.getParameter("login"), Role.valueOf(req.getParameter("role").toUpperCase(Locale.ROOT)))) {
+            req.setAttribute("message", "sorry, when update role something went wrong");
         }
-        if (null != req.getParameter("specialization")) {
-           if(!ServiceFactory.getInstance().getUserService().updateSpecialization(req.getParameter("login"), req.getParameter("specialization"))){
-               req.setAttribute("message", "sorry, when update specialization something went wrong");
-           }
+
+        if (null != req.getParameter("specialization") && !ServiceFactory.getInstance().getUserService().updateSpecialization(req.getParameter("login"), req.getParameter("specialization"))) {
+            req.setAttribute("message", "sorry, when update specialization something went wrong");
         }
+
         List<Procedure> procedureList = ServiceFactory.getInstance().getProcedureService().getAll();
         List<Role> roles = new ArrayList<>();
-        for (Role r : Role.values()) {
-            roles.add(r);
-        }
+        Collections.addAll(roles, Role.values());
         List<List<User>> users = ServiceFactory.getInstance().getUserService().getAllSortByRole();
         req.setAttribute("ratings", users);
         req.setAttribute("roles", roles);

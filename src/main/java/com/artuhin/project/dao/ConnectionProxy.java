@@ -1,11 +1,11 @@
 package com.artuhin.project.dao;
 
-import org.postgresql.jdbc.PgConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import static java.sql.Connection.TRANSACTION_REPEATABLE_READ;
 
 public class ConnectionProxy implements AutoCloseable {
 
@@ -22,7 +22,7 @@ public class ConnectionProxy implements AutoCloseable {
 
     public void setAutoCommit(boolean autoCommit) throws SQLException {
         connection.setAutoCommit(autoCommit);
-        connection.setTransactionIsolation(PgConnection.TRANSACTION_REPEATABLE_READ);
+        connection.setTransactionIsolation(TRANSACTION_REPEATABLE_READ);
     }
 
     public void commit() throws SQLException {

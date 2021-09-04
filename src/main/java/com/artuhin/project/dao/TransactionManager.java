@@ -9,8 +9,9 @@ public class TransactionManager {
 
     private final DbConnector dataSource = DbConnector.getInstance();
     private static final ThreadLocal<ConnectionProxy> currentConnection = new ThreadLocal<>();
+    private static final String CAN_T_CONNECT_TO_DB = "Can`t connect to DB";
     private static TransactionManager instance;
-    private static Logger LOGGER = LogManager.getLogger(DbConnector.class);
+    private static final Logger LOGGER = LogManager.getLogger(TransactionManager.class);
 
     public static synchronized TransactionManager getInstance() {
         if (instance == null) {
@@ -50,7 +51,7 @@ public class TransactionManager {
         try {
             currentConnection.get().commit();
         } catch (SQLException e) {
-            LOGGER.error("Can`t connect to DB", e);
+            LOGGER.error(CAN_T_CONNECT_TO_DB, e);
             try {
                 LOGGER.error("Transaction is being rolled back");
                 currentConnection.get().rollback();
@@ -62,11 +63,10 @@ public class TransactionManager {
                 currentConnection.get().setAutoCommit(true);
                 currentConnection.get().close();
             } catch (SQLException e) {
-                LOGGER.error("Can`t connect to DB", e);
+                LOGGER.error(CAN_T_CONNECT_TO_DB, e);
             }
         }
-
-        currentConnection.set(null);
+        currentConnection.remove();
     }
 
     private ConnectionProxy provideConnection() {
@@ -81,8 +81,10 @@ public class TransactionManager {
         try {
             currentConnection.get().setAutoCommit(false);
         } catch (SQLException e) {
-            LOGGER.error("Can`t connect to DB", e);
+            LOGGER.error(CAN_T_CONNECT_TO_DB, e);
         }
         return currentConnection.get();
     }
+
+
 }
