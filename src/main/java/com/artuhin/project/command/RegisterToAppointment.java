@@ -30,7 +30,7 @@ public class RegisterToAppointment implements ICommand {
             Appointment appointment = AppointmentBuilder.getInstance().setProcedure(ServiceFactory.getInstance().getProcedureService()
                             .getProcedureByName(ServiceFactory.getInstance().getUserService().getByLogin(req.getParameter(MASTER))
                                     .getSpecialization().getName())).setMasterLogin(req.getParameter(MASTER)).setClientLogin(user.getLogin())
-                    .setStartTime(timestamp).setConfirmed(false).setPaidUp(false).setFinished(false).setRated(false).getAppointment();
+                    .setStartTime(timestamp).setConfirmed(false).setPaidUp(false).setFinished(false).setRated(false).Build();
             int time = localDate1.getDayOfYear();
             req.setAttribute("time", localDate1.format(DateTimeFormatter.ofPattern(DATEPATTERN)));
             User master = ServiceFactory.getInstance().getUserService().getByLogin(req.getParameter(MASTER));

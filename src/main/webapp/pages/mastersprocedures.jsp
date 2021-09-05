@@ -68,11 +68,10 @@
                 <form action="/main" method="post">
                     <label><input type="radio" name="language" value="en"  ${loc.equals('en') ?
                             'Checked' :
-                            ''}>EN</label>
+                            ''} disabled>EN</label>
                     <label><input type="radio" name="language" value="ukr"  ${loc.equals('ukr') ?
                             'Checked' :
-                            ''}>UKR</label>
-                    <button type="submit" class="btn btn-sm btn-secondary" name="command" value="locale">✓</button>
+                            ''} disabled>UKR</label>
                 </form>
             </div>
         </div>

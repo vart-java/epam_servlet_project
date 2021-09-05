@@ -1,4 +1,6 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,28 +34,36 @@
     <link href="/css/signin.css" rel="stylesheet">
 </head>
 <body class="text-center">
+<fmt:setLocale value="${loc}"/>
+<fmt:setBundle basename="localization"/>
 <main class="form-signin">
     <form action="/main" method="post">
         <img class="mb-4" src="/images/authorization_logo-removebg-preview.png" alt="" width="220" height="220">
-        <h1 class="h3 mb-3 fw-normal">Please sign in or create an account
+        <h1 class="h3 mb-3 fw-normal"><fmt:message key="sign_in_please"/>
         </h1>
 
         <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="username" minlength="6" maxlength="24">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="username"
+                   minlength="6" maxlength="24">
             <label for="floatingInput">Email address</label>
         </div>
         <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name ="password" pattern="[a-zA-Zа-яА-ЯіІїЇєЄ0-9]+" minlength="5" maxlength="8">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password"
+                   pattern="[a-zA-Zа-яА-ЯіІїЇєЄ0-9]+" minlength="5" maxlength="8">
             <label for="floatingPassword">Password</label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="submit" name="command" value="auth">
-            Sign in</button>
+            <fmt:message key="sign_in"/></button>
         <p style="color: red;" class="text-center"></p>
-        <button class="w-100 btn btn-lg btn-primary" type="submit" name="command" value ="registration">
-            Create an Account</button>
-        <p style="color: red;" class="text-center">${requestScope.message}</p>
+        <button class="w-100 btn btn-lg btn-primary" type="submit" name="command" value="registration">
+            <fmt:message key="create_acc"/></button>
+        <p style="color: red;" class="text-center">
+            <c:if test="${null != requestScope.message}">
+                <fmt:message key="${requestScope.message}"/>
+            </c:if>
+        </p>
         <button class="w-100 btn btn-lg btn-secondary" name="command" value="authAsGuest">
-            As a guest</button>
+            <fmt:message key="as_guest"/></button>
     </form>
     <form class="text-center" action="/main" method="post">
         <label><input type="radio" name="language" value="en"  ${loc.equals('en') ?

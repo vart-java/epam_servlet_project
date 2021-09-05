@@ -2,8 +2,8 @@ package com.artuhin.project.dao;
 
 import com.artuhin.project.model.Appointment;
 import com.artuhin.project.util.rsparser.ResultSetParser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AppointmentDao {
-    private static final Logger LOGGER = LogManager.getLogger(AppointmentDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AppointmentDao.class);
     private static final String SQL_EXCEPTION = "SQL exception in appointments DAO";
     private static AppointmentDao instance;
 

@@ -15,8 +15,13 @@ public class MainServlet extends HttpServlet {
     private final CommandResolver resolver = CommandResolver.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void init() throws ServletException {
         Trigger.start();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         HttpSession session = req.getSession();
         boolean isLogged = session.getAttribute("user") != null;
         if ("registration".equals(req.getParameter("command")) && !isLogged) {
@@ -42,5 +47,10 @@ public class MainServlet extends HttpServlet {
     private void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String page = resolver.getCommand(req).execute(req, resp);
         req.getRequestDispatcher(page).forward(req, resp);
+    }
+
+    @Override
+    public void destroy() {
+        Trigger.stop();
     }
 }

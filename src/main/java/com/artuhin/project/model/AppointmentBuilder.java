@@ -62,7 +62,7 @@ public class AppointmentBuilder {
         return instance;
     }
 
-    public Appointment getAppointment() {
+    public Appointment Build() {
         return appointment;
     }
 }

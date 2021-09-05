@@ -4,8 +4,8 @@ import com.artuhin.project.model.Appointment;
 import com.artuhin.project.model.Procedure;
 import com.artuhin.project.model.Role;
 import com.artuhin.project.model.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class ResultSetParser {
-    private static Logger logger = LogManager.getLogger(ResultSetParser.class);
+    private static Logger logger = LoggerFactory.getLogger(ResultSetParser.class);
     private static ResultSetParser instance = new ResultSetParser();
     private static final String EXCEPTION = "SQL exception from parser";
 

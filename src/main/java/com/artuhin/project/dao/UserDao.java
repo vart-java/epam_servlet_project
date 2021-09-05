@@ -2,8 +2,8 @@ package com.artuhin.project.dao;
 
 import com.artuhin.project.model.User;
 import com.artuhin.project.util.rsparser.ResultSetParser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class UserDao {
-    private static final Logger LOGGER = LogManager.getLogger(UserDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDao.class);
     private static final String SQL_EXCEPTION = "SQL exception in users DAO";
     private static UserDao instance;
 

@@ -19,14 +19,16 @@ public class Authorization implements ICommand {
         User user = userService.getByLogin(login);
         if (user != null && getCryptPassword(password).equals(user.getPassword())) {
             req.getSession().setAttribute("user", user);
-            req.getSession().setAttribute("loc", req.getParameter("language"));
+            if (null == req.getSession().getAttribute("loc")) {
+                req.getSession().setAttribute("loc", "en");
+            }
             return "pages/main.jsp";
         }
-        req.setAttribute("message", "invalid username or password");
+        req.setAttribute("message", "invalid_login");
         return "pages/authorization.jsp";
     }
 
-    private String getCryptPassword (String password){
+    private String getCryptPassword(String password) {
         byte[] bytes = new byte[32];
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
@@ -36,7 +38,7 @@ public class Authorization implements ICommand {
             e.printStackTrace();
         }
         StringBuilder pasBuilder = new StringBuilder();
-        for (byte b: bytes){
+        for (byte b : bytes) {
             pasBuilder.append(String.format("%02X", b));
         }
         return pasBuilder.toString();

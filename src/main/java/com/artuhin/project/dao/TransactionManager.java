@@ -1,7 +1,8 @@
 package com.artuhin.project.dao;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 
@@ -11,7 +12,7 @@ public class TransactionManager {
     private static final ThreadLocal<ConnectionProxy> currentConnection = new ThreadLocal<>();
     private static final String CAN_T_CONNECT_TO_DB = "Can`t connect to DB";
     private static TransactionManager instance;
-    private static final Logger LOGGER = LogManager.getLogger(TransactionManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransactionManager.class);
 
     public static synchronized TransactionManager getInstance() {
         if (instance == null) {

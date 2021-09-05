@@ -1,9 +1,9 @@
 package com.artuhin.project.notification.trigger;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
@@ -11,7 +11,7 @@ import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 
 public class Trigger {
     private static Trigger instance;
-    private static Logger LOGGER = LogManager.getLogger(Trigger.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(Trigger.class);
     private static Scheduler scheduler;
 
     public static synchronized Trigger getInstance() {
@@ -46,7 +46,7 @@ public class Trigger {
         try {
             scheduler.shutdown();
         } catch (SchedulerException e) {
-            LOGGER.error(e);
+            LOGGER.error(String.valueOf(e));
         }
     }
 }
