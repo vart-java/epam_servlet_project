@@ -1,8 +1,8 @@
 package com.artuhin.project.factory;
 
-import com.artuhin.project.dao.AppointmentDao;
-import com.artuhin.project.dao.ProcedureDao;
-import com.artuhin.project.dao.UserDao;
+import com.artuhin.project.dao.daoimpl.AppointmentDao;
+import com.artuhin.project.dao.daoimpl.ProcedureDao;
+import com.artuhin.project.dao.daoimpl.UserDao;
 
 public class DaoFactory {
     private UserDao userDao = UserDao.getInstance();

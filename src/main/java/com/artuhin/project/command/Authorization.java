@@ -1,8 +1,9 @@
 package com.artuhin.project.command;
 
 import com.artuhin.project.factory.ServiceFactory;
-import com.artuhin.project.model.User;
+import com.artuhin.project.model.entity.User;
 import com.artuhin.project.services.UserService;
+import com.artuhin.project.util.FieldChecker;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,8 +16,12 @@ public class Authorization implements ICommand {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String login = req.getParameter("username");
         String password = req.getParameter("password");
+        if (!FieldChecker.checkEmail(login) && !FieldChecker.checkPassword(password)) {
+            req.setAttribute("message", "invalid_login");
+            return "pages/authorization.jsp";
+        }
         UserService userService = ServiceFactory.getInstance().getUserService();
-        User user = userService.getByLogin(login);
+        User user = userService.getAll().stream().filter(u -> u.getLogin().equals(login)).findFirst().orElse(null);
         if (user != null && getCryptPassword(password).equals(user.getPassword())) {
             req.getSession().setAttribute("user", user);
             if (null == req.getSession().getAttribute("loc")) {

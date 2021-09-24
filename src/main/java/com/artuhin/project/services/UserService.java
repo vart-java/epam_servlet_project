@@ -1,29 +1,35 @@
 package com.artuhin.project.services;
 
-import com.artuhin.project.model.Role;
-import com.artuhin.project.model.User;
+import com.artuhin.project.model.entity.Procedure;
+import com.artuhin.project.model.enums.Role;
+import com.artuhin.project.model.entity.User;
+import com.artuhin.project.util.annotations.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public interface UserService extends Service {
 
-    String createUser(User user);
+    User createUser(User user);
 
-    User getByLogin(String login);
+    User getById(long id);
 
     List<User> getAll();
 
-    boolean delete(String login);
+    boolean delete(long id);
 
     List<User> getAllMastersSortByRating();
 
-    List<List<User>> getAllMastersBySpecilizationSortByRating();
+    HashMap<Procedure, List<User>> getAllMastersBySkillsSortByRating();
 
-    boolean updateRating(String login, int recall);
+    boolean updateRating(long id, int recall);
 
-    boolean updateRole(String login, Role role);
+    boolean updateRole(long id, Role role);
 
-    List<List<User>> getAllSortByRole();
+    @Transactional
+    boolean addSkill(long id, long procedureId);
 
-    boolean updateSpecialization(String login, String specialization);
+    @Transactional
+    boolean deleteSkill(long masterId, long procedureId);
 }

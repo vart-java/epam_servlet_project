@@ -1,7 +1,6 @@
 package com.artuhin.project.controller;
-
-import com.artuhin.project.factory.ServiceFactory;
-import com.artuhin.project.model.Appointment;
+import com.artuhin.project.model.entity.User;
+import com.artuhin.project.model.enums.Role;
 import com.artuhin.project.notification.trigger.Trigger;
 
 import javax.servlet.ServletException;
@@ -28,9 +27,11 @@ public class MainServlet extends HttpServlet {
             req.getRequestDispatcher("pages/registration.jsp").forward(req, resp);
         }
         if ("getRecall".equals(req.getParameter("command")) && !isLogged) {
-            Appointment appointment = ServiceFactory.getInstance().getAppointmentsService().getById(Long.parseLong(req.getParameter("id")));
-            req.setAttribute("appointment", appointment);
-            req.getRequestDispatcher("pages/recall.jsp").forward(req, resp);
+            User common = new User();
+            common.setLogin("guest@yahoo.com");
+            common.setRole(Role.GUEST);
+            req.getSession().setAttribute("user", common);
+            doRequest(req, resp);
         }
         if (!isLogged) {
             req.getRequestDispatcher("pages/authorization.jsp").forward(req, resp);
@@ -45,8 +46,13 @@ public class MainServlet extends HttpServlet {
     }
 
     private void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String page = resolver.getCommand(req).execute(req, resp);
-        req.getRequestDispatcher(page).forward(req, resp);
+        try {
+            String page = resolver.getCommand(req).execute(req, resp);
+            req.getRequestDispatcher(page).forward(req, resp);
+        }
+        catch (Exception e){
+            req.getRequestDispatcher("pages/404.jsp").forward(req, resp);
+        }
     }
 
     @Override

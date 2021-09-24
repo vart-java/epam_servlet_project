@@ -13,4 +13,13 @@
         <url-pattern>/main</url-pattern>
     </servlet-mapping>
 
+    <filter>
+        <filter-name>UTFilter</filter-name>
+        <filter-class>com.artuhin.project.controller.filter.UTFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>UTFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>

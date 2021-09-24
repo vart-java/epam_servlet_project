@@ -1,9 +1,11 @@
 package com.artuhin.project.util.rsparser;
 
-import com.artuhin.project.model.Appointment;
-import com.artuhin.project.model.Procedure;
-import com.artuhin.project.model.Role;
-import com.artuhin.project.model.User;
+import com.artuhin.project.model.entity.Appointment;
+import com.artuhin.project.model.entity.Procedure;
+import com.artuhin.project.model.entity.User;
+import com.artuhin.project.model.enums.Role;
+import com.artuhin.project.model.enums.Status;
+import org.postgresql.util.PGInterval;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,16 +31,17 @@ public class ResultSetParser {
         List<User> userList = new ArrayList<>();
         try {
             while (resultSet.next()) {
-                User user = new User();
-                user.setLogin(resultSet.getString("login"));
-                user.setPassword(resultSet.getString("password"));
-                user.setRole(Role.valueOf(resultSet.getString("role_name").toUpperCase(Locale.ROOT)));
-                user.setRating(resultSet.getDouble("rating"));
-                user.setRecallCount(resultSet.getInt("recall_count"));
-                if (resultSet.getString("specialization") != null) {
-                    user.setSpecialization(new Procedure(resultSet.getString("specialization")));
-                }
-                userList.add(user);
+                userList.add(
+                        new User()
+                                .builder()
+                                .id(resultSet.getLong("id"))
+                                .login(resultSet.getString("login"))
+                                .password(resultSet.getString("password"))
+                                .role(Role.values()[(int) (resultSet.getLong("role_id")-1)])
+                                .rating(resultSet.getDouble("rating"))
+                                .recallCount(resultSet.getInt("recall_count"))
+                                .build()
+                );
             }
         } catch (SQLException e) {
             logger.error(EXCEPTION, e);
@@ -50,17 +53,17 @@ public class ResultSetParser {
         List<Appointment> appointmentsList = new ArrayList<>();
         try {
             while (resultSet.next()) {
-                Appointment appointment = new Appointment();
-                appointment.setId(resultSet.getLong("id"));
-                appointment.setProcedure(new Procedure(resultSet.getString("procedure_name"), resultSet.getLong("procedure_duration")));
-                appointment.setMasterLogin(resultSet.getString("master_login"));
-                appointment.setClientLogin(resultSet.getString("client_login"));
-                appointment.setStartTime(resultSet.getTimestamp("start_time"));
-                appointment.setConfirmed(resultSet.getBoolean("is_confirmed"));
-                appointment.setPaidUp(resultSet.getBoolean("is_paid_up"));
-                appointment.setFinished(resultSet.getBoolean("is_finished"));
-                appointment.setRated(resultSet.getBoolean("is_rated"));
-                appointmentsList.add(appointment);
+                appointmentsList.add(
+                        new Appointment()
+                                .builder()
+                                .id(resultSet.getLong("id"))
+                                .procedureId(resultSet.getLong("procedure_id"))
+                                .clientId(resultSet.getLong("client_id"))
+                                .masterId(resultSet.getLong("master_id"))
+                                .startTime(resultSet.getTimestamp("start_time"))
+                                .status(Status.valueOf(resultSet.getString("status").toUpperCase(Locale.ROOT)))
+                                .build()
+                );
             }
         } catch (SQLException e) {
             logger.error(EXCEPTION, e);
@@ -72,10 +75,16 @@ public class ResultSetParser {
         List<Procedure> procedureList = new ArrayList<>();
         try {
             while (resultSet.next()) {
-                Procedure procedure = new Procedure();
-                procedure.setName(resultSet.getString("name"));
-                procedure.setDuration(resultSet.getLong("duration"));
-                procedureList.add(procedure);
+                PGInterval pgInterval = (PGInterval) resultSet.getObject("duration");
+                long duration = pgInterval.getHours()*3600+pgInterval.getMinutes()*60;
+                procedureList.add(
+                        new Procedure()
+                                .builder()
+                                .id(resultSet.getLong("id"))
+                                .name(resultSet.getString("name"))
+                                .duration(duration)
+                                .build()
+                );
             }
         } catch (SQLException e) {
             logger.error(EXCEPTION, e);

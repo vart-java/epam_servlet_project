@@ -3,6 +3,10 @@ package com.artuhin.project.factory;
 
 import com.artuhin.project.services.*;
 import com.artuhin.project.services.dynamicproxy.ProxyService;
+import com.artuhin.project.services.servicesimpl.AppointmentsServiceImpl;
+import com.artuhin.project.services.servicesimpl.NotificationServiceImpl;
+import com.artuhin.project.services.servicesimpl.ProcedureServiceImpl;
+import com.artuhin.project.services.servicesimpl.UserServiceImpl;
 import com.artuhin.project.util.annotations.Transactional;
 
 import java.util.Arrays;

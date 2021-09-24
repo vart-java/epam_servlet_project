@@ -25,9 +25,8 @@ public class CommandResolver {
         commands.put("regToApp", new RegisterToAppointment());
         commands.put("logOut", new LogOut());
         commands.put("main", new Main());
-        commands.put("ratings", new Ratings());
-        commands.put("regByMasterName", new RegisterByMasterName());
-        commands.put("regByProcedure", new RegisterByProcedure());
+        commands.put("ratings", new MasterRatings());
+        commands.put("allUnits", new allUnuts());
         commands.put("authAsGuest", new AuthorizationAsGuest());
         commands.put("getRecall", new RecallHandler());
         commands.put("adminMenu", new AdminMenu());

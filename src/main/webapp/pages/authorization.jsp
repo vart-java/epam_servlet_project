@@ -6,9 +6,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.87.0">
     <title>Signin Beauty Saloon</title>
 
     <!-- Bootstrap core CSS -->
@@ -74,7 +71,7 @@
                 ''}>UKR</label>
         <button type="submit" class="btn btn-sm btn-secondary" name="command" value="locale">✓</button>
     </form>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+    <p class="mt-5 mb-3 text-muted">&copy; 2001–2021</p>
 </main>
 </body>
 </html>

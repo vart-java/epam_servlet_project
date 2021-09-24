@@ -1,6 +1,8 @@
 package com.artuhin.project.dao;
 
 
+import com.artuhin.project.dao.management.ConnectionProxy;
+import com.artuhin.project.dao.management.DbConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +26,7 @@ public class TransactionManager {
     private TransactionManager() {
     }
 
-    ConnectionProxy getConnection() {
+    public ConnectionProxy getConnection() {
         if (currentConnection.get() == null) {
             return new ConnectionProxy(dataSource.getConnection());
         } else {

@@ -1,8 +1,10 @@
 package com.artuhin.project.command;
 
 import com.artuhin.project.factory.ServiceFactory;
-import com.artuhin.project.model.Role;
-import com.artuhin.project.model.User;
+import com.artuhin.project.model.enums.Role;
+import com.artuhin.project.model.entity.User;
+import com.artuhin.project.services.UserService;
+import com.artuhin.project.util.FieldChecker;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,19 +13,23 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Registration implements ICommand {
+    UserService userService = ServiceFactory.getInstance().getUserService();
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        User user = new User();
-        user.setLogin(req.getParameter("username"));
-        user.setPassword(getCryptPassword(req.getParameter("password")));
-        user.setRole(Role.CLIENT);
-        String name = ServiceFactory.getInstance().getUserService().createUser(user);
-        if (!name.equals("#userExists")) {
+        if (!FieldChecker.checkEmail(req.getParameter("username")) && !FieldChecker.checkPassword(req.getParameter("password"))) {
+            req.setAttribute("message", "invalid_login");
+            return "pages/authorization.jsp";
+        }
+
+        User user = new User().builder().login(req.getParameter("username"))
+                .password(getCryptPassword(req.getParameter("password")))
+                .role(Role.CLIENT).build();
+        if (userService.createUser(user).getId()>0) {
             req.getSession().setAttribute("user", user);
             return "pages/main.jsp";
         }
-        req.setAttribute("message", "sorry, current login already taken");
+        req.setAttribute("message", "current_long_no");
         return "pages/authorization.jsp";
     }
 

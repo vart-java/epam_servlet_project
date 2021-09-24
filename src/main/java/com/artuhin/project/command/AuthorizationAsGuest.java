@@ -1,8 +1,8 @@
 package com.artuhin.project.command;
 
 
-import com.artuhin.project.model.Role;
-import com.artuhin.project.model.User;
+import com.artuhin.project.model.enums.Role;
+import com.artuhin.project.model.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

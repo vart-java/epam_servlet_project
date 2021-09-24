@@ -51,32 +51,24 @@
             <div class="collapse navbar-collapse" id="navbarScroll">
                 <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/main?command=main">| <fmt:message key="menu_main"/></a>
+                        <a class="nav-link active" aria-current="page" href="/main?command=main">| <fmt:message
+                                key="menu_main"/></a>
                     </li>
                     <li class="nav-item">
-                                <a ${user.role.name().equals('GUEST') ?
-                                        'class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"' :
-                                      'class="nav-link" href="/main?command=procedures"'}
-                                ><fmt:message key="menu_my_procedures"/></a>
+                        <a class="nav-link" href="/main?command=allUnits" }
+                        ><fmt:message key="masters_menu"/></a>
                     </li>
-                    <li class="nav-item dropdown">
-                        ${user.role.name().equals('ADMINISTRATOR') || user.role.name().equals('MASTER') ? '<a class="nav-link disabled" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-disabled="true">' :
-                                '<a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">'}
-                            <c:if test="${user.role.name().equals('GUEST')}">
-                                <fmt:message key="menu_procedures"/>
-                            </c:if>
-                            <c:if test="${!user.role.name().equals('GUEST')}">
-                                <fmt:message key="menu_book"/>
-                            </c:if>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                            <li><a class="dropdown-item" href="/main?command=ratings"><fmt:message key="menu_by_master_rat"/></a></li>
-                            <li><a class="dropdown-item" href="/main?command=regByMasterName"><fmt:message key="menu_by_master_name"/></a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="/main?command=regByProcedure"><fmt:message key="menu_by_procedure"/></a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a ${user.role.name().equals('GUEST') ?
+                                'class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"' :
+                                'class="nav-link" href="/main?command=procedures"'}
+                        ><fmt:message key="menu_my_procedures"/></a>
+                    </li>
+                    <li class="nav-item">
+                        <a ${!user.role.name().equals('CLIENT') ?
+                                'class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"' :
+                                'class="nav-link" href="/main?command=ratings"'}
+                        ><fmt:message key="menu_book"/></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/main?command=logOut">
@@ -88,19 +80,22 @@
                             </c:if>
                         </a>
                     </li>
-                    <c:if test="${user.role.name().equals('ADMINISTRATOR')}">
-                        <li class="nav-item"> <a class="nav-link" href="/main?command=adminMenu"><fmt:message key="menu_admin"/></a></li>
+                    <c:if test="${user.role.name().equals('ADMIN')}">
+                        <li class="nav-item"><a class="nav-link" href="/main?command=adminMenu"><fmt:message
+                                key="menu_admin"/></a></li>
                     </c:if>
                 </ul>
-                <form action="/main" method="post">
-                    <label><input type="radio" name="language" value="en"  ${loc.equals('en') ?
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" ${loc.equals('en') ?
                             'Checked' :
-                            ''}>EN</label>
-                    <label><input type="radio" name="language" value="ukr"  ${loc.equals('ukr') ?
+                            '' }>
+                    <label class="btn btn-outline-secondary" for="btnradio1" >EN</label>
+
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" ${loc.equals('ukr') ?
                             'Checked' :
-                            ''}>UKR</label>
-                    <button type="submit" class="btn btn-sm btn-secondary" name="command" value="locale">✓</button>
-                </form>
+                            '' }>
+                    <label class="btn btn-outline-secondary" for="btnradio2">УКР</label>
+                </div>
             </div>
         </div>
     </nav>
@@ -251,7 +246,27 @@
             <p>&copy; 2017–2021 <fmt:message key="epam"/> &middot; <a href="https://careers.epam.ua/"><fmt:message key="main_rights"/> </a>
                 &middot; <a href="https://zakon.rada.gov.ua/laws/show/254%D0%BA/96-%D0%B2%D1%80#Text"><fmt:message key="main_terms"/></a></p>
         </footer>
+    </div>
 </main>
-<script defer src="/js/bootstrap.bundle.js"></script>
+<script src="/js/bootstrap.bundle.js"></script>
+<script src="/js/jquery-3.6.0.js"></script>
+<script type="text/javascript">
+    $('#btnradio2').click(function() {
+        var x = new XMLHttpRequest();
+        x.open("GET", "/main?command=locale&language=ukr", true);
+        x.onload = function (){
+        }
+        x.send(null);
+        location.reload();
+    });
+    $('#btnradio1').click(function() {
+        var x = new XMLHttpRequest();
+        x.open("GET", "/main?command=locale&language=en", true);
+        x.onload = function (){
+        }
+        x.send(null);
+        location.reload();
+    });
+</script>
 </body>
 </html>
