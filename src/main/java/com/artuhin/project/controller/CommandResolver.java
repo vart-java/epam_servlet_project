@@ -26,7 +26,7 @@ public class CommandResolver {
         commands.put("logOut", new LogOut());
         commands.put("main", new Main());
         commands.put("ratings", new MasterRatings());
-        commands.put("allUnits", new allUnuts());
+        commands.put("allUnits", new AllUnits());
         commands.put("authAsGuest", new AuthorizationAsGuest());
         commands.put("getRecall", new RecallHandler());
         commands.put("adminMenu", new AdminMenu());

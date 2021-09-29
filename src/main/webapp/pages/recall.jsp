@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="mytag" tagdir="/WEB-INF/tags"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,7 +85,7 @@
             class="badge bg-primary">Please</span></h1>
 <div class="container tables">
     <div class="row">
-        <div class="col-lg-2">
+        <div class="col-lg-1">
             <form action="/main" method="post">
                 <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
                         name="recall_rating">
@@ -98,12 +100,18 @@
                     <option value="9">9</option>
                     <option value="10">10</option>
                 </select>
-                <input type="hidden" name="id" value=${requestScope.recallModel.appointmentId}>
-                <button type="submit" class="btn btn-primary ${requestScope.recallModel.status.name().equals('RATED') ?
+                <button type="submit" class="btn btn-primary ${requestScope.recallDto.status.name().equals('RATED') ?
                         'disabled' :
                         ''}" name="command" value="getRecall">submit
                 </button>
+                <input type="hidden" name="id" value=${requestScope.recallDto.appointmentId}>
             </form>
+        </div>
+        <div class="col-lg-8">
+
+        </div>
+        <div class="col-lg-3">
+            <mytag:table cell1="${requestScope.recallDto.procedureName}" cell2="${requestScope.recallDto.masterName}"/>
         </div>
     </div>
 </div>
